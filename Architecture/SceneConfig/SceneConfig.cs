@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Architecture
 {
@@ -21,12 +19,17 @@ namespace Architecture
 
         public Dictionary<Type, InteractorBase> CreateAllInteractors()
         {
-            if (scene.SceneName == "Main")
+            switch (scene.SceneName)
             {
-                CreateNewInteractor<PlayerInteractor>();
-                Debug.Log("All interactors created");
+                case "Main":
+                    CreateNewInteractor<PlayerInteractor>();
+                    Debug.Log("All interactors created");
+                    break;
+                
+                default:
+                    Debug.Log("There are not interactors in the scene");
+                    break;
             }
-
             return interactorsMap;
         }
         private void CreateNewInteractor<T>() where T : InteractorBase, new()

@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using Architecture;
 using System;
 
-public sealed class InteractorsPool
+namespace Architecture
 {
-    public InteractorsPool()
+    public sealed class InteractorsPool
     {
-        interactorsMap = new Dictionary<Type, InteractorBase>();
-    }
+        public InteractorsPool()
+        {
+            interactorsMap = new Dictionary<Type, InteractorBase>();
+        }
 
-    public Dictionary<Type, InteractorBase> interactorsMap;
+        public Dictionary<Type, InteractorBase> interactorsMap;
+    }
 }
