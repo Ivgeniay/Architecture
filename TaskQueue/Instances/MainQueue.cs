@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace TaskQueues
 {
-    public sealed class MainQueue : IMainQueue
+    public class MainQueue : IMainQueue
     {
         public MainQueue()
         {
@@ -49,7 +49,7 @@ namespace TaskQueues
         public void AddTask (Action callback, TaskPriority priority = TaskPriority.Default)
         {
             SortTaskAndAddToQueue(callback, priority);
-            Debug.Log($"{callback} was added");
+            Debug.Log($"{callback} was added with priority: {priority}");
 
             if (!isBusy)
             {

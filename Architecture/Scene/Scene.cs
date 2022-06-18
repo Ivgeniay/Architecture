@@ -16,7 +16,9 @@ namespace Architecture
             repositoryPool = new RepositoriesPool();
             config = new SceneConfig(this);
             interactorsPool.interactorsMap = config.CreateAllInteractors();
-            repositoryPool.repositoriesMap = config.CreateAllRepositories();
+            InitializeInteractors(interactorsPool.interactorsMap);
+            StartInteractors(interactorsPool.interactorsMap);
+
         }
         private string sceneName;
         public string SceneName 
@@ -39,6 +41,15 @@ namespace Architecture
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
                 pair.Value.Initialization();
+                pair.Value.InitializeRepository();
+            }
+        }
+        private void StartInteractors(Dictionary<Type, InteractorBase> map)
+        {
+            foreach(KeyValuePair<Type, InteractorBase> pair in map)
+            {
+                pair.Value.Start();
+                pair.Value.StartRepository();
             }
         }
 

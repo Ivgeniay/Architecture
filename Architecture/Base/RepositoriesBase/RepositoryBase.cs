@@ -6,16 +6,8 @@ namespace Architecture
 {
     public abstract class RepositoryBase : IRepository
     {
-        public void Initialization()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        abstract public void Save();
-
-        public void Start()
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract void Initialization();
+        public abstract void Save();
+        public abstract void Start();
     }
 }

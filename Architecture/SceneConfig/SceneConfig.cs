@@ -29,30 +29,11 @@ namespace Architecture
 
             return interactorsMap;
         }
-
-        public Dictionary<Type, RepositoryBase> CreateAllRepositories()
-        {
-            if (scene.SceneName == "Main")
-            {
-                CreateNewRepositories<PlayerRepository>();
-            }
-
-            return repositoriesMap;
-        }
-
         private void CreateNewInteractor<T>() where T : InteractorBase, new()
         {
             var interactor = new T();
             var type = typeof(T);
             interactorsMap[type] = interactor;
         }
-
-        private void CreateNewRepositories<T>() where T : RepositoryBase, new()
-        {
-            var repository = new T();
-            var type = typeof(T);
-            repositoriesMap[type] = repository;
-        }
-
     }
 }
