@@ -5,23 +5,18 @@ namespace Architecture
         protected RepositoryBase repository;
         public virtual void InitializeRepository()
         {
-            repository.Initialization();
+            if (repository != null)
+                repository.Initialization();
         }
 
         public virtual void StartRepository()
         {
-            repository.Start();
+            if (repository != null)
+                repository.Start();
         }
 
-        public virtual void Start()
-        {
-
-        }
-
-        public virtual void Initialization()
-        {
-
-        }
+        public abstract void Start();
+        public abstract void Initialization();
 
     }
 }
