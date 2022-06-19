@@ -16,6 +16,7 @@ namespace Review
 
         public event Action<object> OnChange;
 
+        private T _value;
         public T Value {
             get => _value;
             set {
@@ -23,7 +24,6 @@ namespace Review
                 OnChange?.Invoke(value);
             }
         }
-        private T _value;
 
         public override string ToString() =>
                                 Value.ToString();

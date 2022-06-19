@@ -39,9 +39,7 @@ namespace TaskQueues
                                 QueueHighPriority.Count + 1;
                 }
                 else 
-                {
                     _count =    0;
-                }
                 return _count;
             }
         }
