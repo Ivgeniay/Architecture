@@ -45,9 +45,9 @@ namespace Architecture
             this.IsLoaded = false;
 
             yield return Routine.StartRoutine(InitializeInteractorsRoutine(map));
+            Debug.Log("All interactors are initialized");
             yield return Routine.StartRoutine(StartInteractorsRoutine(map));
-
-            yield return new WaitForSeconds(2);
+            Debug.Log("All interactors started");
 
             this.IsLoaded = true;
             onLoadedEvent?.Invoke(SceneName);
@@ -58,30 +58,26 @@ namespace Architecture
         {
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
-                pair.Value.InitializeInteractor();
+                yield return Routine.StartRoutine(pair.Value.InitializeInteractor());
             }
-            yield return null;
 
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
-                pair.Value.InitializeRepository();
+                yield return Routine.StartRoutine(pair.Value.InitializeRepository());
             }
-            yield return null;
         }
 
         private IEnumerator StartInteractorsRoutine(Dictionary<Type, InteractorBase> map)
         {
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
-                pair.Value.StartInteractor();
+                yield return Routine.StartRoutine(pair.Value.StartInteractor());
             }
-            yield return null;
 
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
-                pair.Value.StartRepository();
+                yield return Routine.StartRoutine(pair.Value.StartRepository());
             }
-            yield return null;
         }
 
 

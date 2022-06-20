@@ -1,5 +1,6 @@
 using UnityEngine;
 using Architecture;
+using System.Collections;
 
 public class PlayerInteractor : InteractorBase
 {
@@ -8,24 +9,31 @@ public class PlayerInteractor : InteractorBase
         this.repository = new PlayerRepository();
     }
 
-    //private RepositoryBase repository 
     private PlayerRepository repository;
 
-    public override void InitializeInteractor()
+    public override IEnumerator InitializeInteractor()
     {
-        Debug.Log($"HEY {this} is initialized!");
-        this.repository.InitializeRepository();
-        //throw new System.NotImplementedException();
+        yield return Routine.StartRoutine(TestInitializeInteractor());
+        yield return Routine.StartRoutine(this.repository.InitializeRepository());
     }
 
-    public override void StartInteractor()
-    {
-        //throw new System.NotImplementedException();
-    }
+        private IEnumerator TestInitializeInteractor()
+        {
+            yield return new WaitForSeconds(2);
+            Debug.Log($"HEY {this} is initialized!");
+        }
 
-    public void AddCure(int cure)
+    public override IEnumerator StartInteractor()
     {
+        yield return Routine.StartRoutine(TestStartInteractor());
+        yield return Routine.StartRoutine(this.repository.InitializeRepository());
     }
+        private IEnumerator TestStartInteractor()
+        {
+            yield return new WaitForSeconds(1);
+            Debug.Log($"HEY {this} is started!");
+        }
+
     public void TakeDamage(int dmg)
     {
         if (repository.Health - dmg < 0) repository.Health = 0;

@@ -1,10 +1,12 @@
+using System.Collections;
+
 namespace Architecture
 {
     public interface IRepository
     {
-        abstract void InitializeRepository();
-        abstract void Start();
-        abstract void Save();
+        abstract IEnumerator InitializeRepository();
+        abstract IEnumerator Start();
+        abstract IEnumerator Save();
 
     }
 }

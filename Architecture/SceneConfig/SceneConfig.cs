@@ -20,7 +20,7 @@ namespace Architecture
             {
                 case "Main":
                     CreateNewInteractor<PlayerInteractor>();
-                    Debug.Log("All interactors created");
+                    Debug.Log("All interactors are created");
                     break;
                 
                 default:

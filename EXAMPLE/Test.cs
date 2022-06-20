@@ -10,6 +10,7 @@ public class Test : MonoBehaviour
     {
         App.Initialize();
         App.onLoadedAppEvent += onLoadedAppHandler;
+        player = App.GetInteractor<PlayerInteractor>();
     }
 
 

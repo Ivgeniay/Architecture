@@ -20,6 +20,9 @@ namespace Architecture
         /// Event reporting the end of loading all interactors and their repositories
         /// </summary>
         public static event Action onLoadedAppEvent;
+        /// <summary>  
+        ///  The loading state of the application architecture.
+        /// </summary> 
         public static bool IsLoaded() => scene.IsLoaded;
         private static Scene scene;
 

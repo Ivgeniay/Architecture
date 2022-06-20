@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Architecture;
+using System.Collections;
 
 public class PlayerRepository : RepositoryBase
 {
@@ -12,20 +13,21 @@ public class PlayerRepository : RepositoryBase
             _health = value;
         }
     }
-    public override void InitializeRepository()
+    public override IEnumerator InitializeRepository()
     {
-        //throw new System.NotImplementedException();
+        yield return new WaitForSeconds(1);
         Debug.Log($"HEY {this} is initialized!");
     }
 
-    public override void Save()
+    public override IEnumerator Save()
     {
-        //throw new System.NotImplementedException();
+        yield return null;
     }
 
-    public override void Start()
+    public override IEnumerator Start()
     {
-        //throw new System.NotImplementedException();
+        yield return new WaitForSeconds(1);
+        Debug.Log($"HEY {this} is started!");
     }
 
 

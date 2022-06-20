@@ -1,13 +1,20 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Architecture
 {
     public abstract class InteractorBase : IInteractor
     {
-        public virtual void InitializeRepository() {}
-        public virtual void StartRepository() {}
-        public abstract void StartInteractor();
-        public abstract void InitializeInteractor();
+        public virtual IEnumerator InitializeRepository() 
+        {
+            yield return null;
+        }
+        public virtual IEnumerator StartRepository() 
+        {
+            yield return null;
+        }
+        public abstract IEnumerator InitializeInteractor();
+        public abstract IEnumerator StartInteractor();
 
     }
 }
