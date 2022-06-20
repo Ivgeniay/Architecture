@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using TaskQueues;
 
 namespace Architecture
 {
@@ -16,7 +15,6 @@ namespace Architecture
             interactorsPool.interactorsMap = config.CreateAllInteractors();
             InitializeInteractors(interactorsPool.interactorsMap);
             StartInteractors(interactorsPool.interactorsMap);
-
         }
         private string sceneName;
         public string SceneName 

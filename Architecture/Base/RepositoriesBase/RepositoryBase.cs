@@ -1,3 +1,5 @@
+
+
 namespace Architecture
 {
     public abstract class RepositoryBase : IRepository

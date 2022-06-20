@@ -11,12 +11,9 @@ namespace Architecture
         {
             this.scene = scene;
             interactorsMap = new Dictionary<Type, InteractorBase>();
-            repositoriesMap = new Dictionary<Type, RepositoryBase>();
         }
 
         private Dictionary<Type, InteractorBase> interactorsMap;
-        public Dictionary<Type, RepositoryBase> repositoriesMap;
-
         public Dictionary<Type, InteractorBase> CreateAllInteractors()
         {
             switch (scene.SceneName)
