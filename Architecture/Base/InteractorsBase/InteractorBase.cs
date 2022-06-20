@@ -6,8 +6,8 @@ namespace Architecture
     {
         public virtual void InitializeRepository() {}
         public virtual void StartRepository() {}
-        public abstract void Start();
-        public abstract void Initialization();
+        public abstract void StartInteractor();
+        public abstract void InitializeInteractor();
 
     }
 }

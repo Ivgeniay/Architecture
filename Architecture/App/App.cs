@@ -1,3 +1,6 @@
+using UnityEngine;
+using System;
+
 namespace Architecture
 {
     /// <summary>  
@@ -12,22 +15,36 @@ namespace Architecture
         {
             CreateScene();
         }
-        
 
-///  Return interactor "App.GetInteractor<\typeof(InteractorBase)>";
+        /// <summary>  
+        /// Event reporting the end of loading all interactors and their repositories
+        /// </summary>
+        public static event Action onLoadedAppEvent;
+        public static bool IsLoaded() => scene.IsLoaded;
         private static Scene scene;
-        private static void CreateScene()
-        {
-            if (scene == null)
-                scene = new Scene();
-        }
+
+
 
         /// <summary>  
         ///  Return interactor. typeof(InteractorBase);
         /// </summary> 
         public static T GetInteractor<T>() where T: InteractorBase
         {
-            return scene.GetInteractor<T>();
+            return scene.IsLoaded? scene.GetInteractor<T>() : null;
         }
+
+        private static void CreateScene()
+        {
+            if (scene == null)
+                scene = new Scene();
+            scene.onLoadedEvent += onLoaded;
+        }
+
+        private static void onLoaded(string SceneName)
+        {
+            onLoadedAppEvent?.Invoke();
+            Debug.Log($"HEY, Scene:\"{SceneName}\" is loaded!");
+        }
+
     }
 }

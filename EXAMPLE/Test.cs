@@ -9,8 +9,9 @@ public class Test : MonoBehaviour
     void Awake()
     {
         App.Initialize();
-        player = App.GetInteractor<PlayerInteractor>();
+        App.onLoadedAppEvent += onLoadedAppHandler;
     }
+
 
     void Start()
     {
@@ -33,5 +34,14 @@ public class Test : MonoBehaviour
             player.TakeDamage(t);
             Debug.Log(player.GetHealth().ToString());
         }
+
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            Debug.Log($"{App.IsLoaded()}");
+        }
+    }
+    private void onLoadedAppHandler()
+    {
+        player = App.GetInteractor<PlayerInteractor>();
     }
 }

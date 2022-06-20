@@ -1,27 +1,35 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Architecture
 {
     public class Scene
     {
+        /// <summary>  
+        ///  Event fired when all interactors and their repositories have finished loading.
+        /// </summary> 
+        public event Action<string> onLoadedEvent;
         public Scene()
         {
+            interactorsPool = new();
+            repositoryPool = new();
+
             SceneName = SceneManager.GetActiveScene().name;
-            interactorsPool = new InteractorsPool();
-            repositoryPool = new RepositoriesPool();
             config = new SceneConfig(this);
+
             interactorsPool.interactorsMap = config.CreateAllInteractors();
-            InitializeInteractors(interactorsPool.interactorsMap);
-            StartInteractors(interactorsPool.interactorsMap);
+            
+            Routine.StartRoutine(StartArchitecture(interactorsPool.interactorsMap));
         }
-        private string sceneName;
-        public string SceneName 
-        {
-            get => sceneName;
-            private set => sceneName = value;
-        }
+
+        /// <summary>  
+        ///  The loading state of the application architecture.
+        /// </summary> 
+        public bool IsLoaded{get; private set;}
+        public string SceneName {get; private set;}
         private SceneConfig config;
         private InteractorsPool interactorsPool;
         private RepositoriesPool repositoryPool;
@@ -32,22 +40,50 @@ namespace Architecture
             return (T)interactorsPool.interactorsMap[type];
         }
 
-        private void InitializeInteractors(Dictionary<Type, InteractorBase> map)
+        private IEnumerator StartArchitecture(Dictionary<Type, InteractorBase> map)
+        {
+            this.IsLoaded = false;
+
+            yield return Routine.StartRoutine(InitializeInteractorsRoutine(map));
+            yield return Routine.StartRoutine(StartInteractorsRoutine(map));
+
+            yield return new WaitForSeconds(2);
+
+            this.IsLoaded = true;
+            onLoadedEvent?.Invoke(SceneName);
+        }
+
+
+        private IEnumerator InitializeInteractorsRoutine(Dictionary<Type, InteractorBase> map)
         {
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
-                pair.Value.Initialization();
+                pair.Value.InitializeInteractor();
+            }
+            yield return null;
+
+            foreach(KeyValuePair<Type, InteractorBase> pair in map)
+            {
                 pair.Value.InitializeRepository();
             }
+            yield return null;
         }
-        private void StartInteractors(Dictionary<Type, InteractorBase> map)
+
+        private IEnumerator StartInteractorsRoutine(Dictionary<Type, InteractorBase> map)
         {
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
-                pair.Value.Start();
+                pair.Value.StartInteractor();
+            }
+            yield return null;
+
+            foreach(KeyValuePair<Type, InteractorBase> pair in map)
+            {
                 pair.Value.StartRepository();
             }
+            yield return null;
         }
+
 
     }
 }
