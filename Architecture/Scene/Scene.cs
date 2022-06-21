@@ -49,40 +49,58 @@ namespace Architecture
         {
             this.IsLoaded = false;
 
-            yield return Routine.StartRoutine(InitializeInteractorsRoutine(map));
-            Debug.Log("All interactors are initialized");
-            yield return Routine.StartRoutine(StartInteractorsRoutine(map));
-            Debug.Log("All interactors started");
+            yield return Routine.StartRoutine(InitializeInteractorsRoutine1(map));
+            // yield return Routine.StartRoutine(InitializeInteractorsRoutine(map));
+            // Debug.Log("All interactors are initialized");
+            // yield return Routine.StartRoutine(StartInteractorsRoutine(map));
+            // Debug.Log("All interactors started");
 
             this.IsLoaded = true;
             onLoadedEvent?.Invoke(SceneName);
         }
 
-        private IEnumerator InitializeInteractorsRoutine(Dictionary<Type, InteractorBase> map)
+        private IEnumerator InitializeInteractorsRoutine1(Dictionary<Type, InteractorBase> map)
         {
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
                 yield return Routine.StartRoutine(pair.Value.InitializeInteractor());
-            }
-
-            foreach(KeyValuePair<Type, InteractorBase> pair in map)
-            {
                 yield return Routine.StartRoutine(pair.Value.InitializeRepository());
-            }
-        }
-
-        private IEnumerator StartInteractorsRoutine(Dictionary<Type, InteractorBase> map)
-        {
-            foreach(KeyValuePair<Type, InteractorBase> pair in map)
-            {
                 yield return Routine.StartRoutine(pair.Value.StartInteractor());
-            }
-
-            foreach(KeyValuePair<Type, InteractorBase> pair in map)
-            {
                 yield return Routine.StartRoutine(pair.Value.StartRepository());
                 NumOfInteractorsWereLoaded.Value++;
             }
         }
+
+        // private IEnumerator InitializeInteractorsRoutine(Dictionary<Type, InteractorBase> map)
+        // {
+        //     foreach(KeyValuePair<Type, InteractorBase> pair in map)
+        //     {
+        //         NumOfInteractorsWereLoaded.Value++;
+        //         yield return Routine.StartRoutine(pair.Value.InitializeInteractor());
+        //     }
+
+        //     foreach(KeyValuePair<Type, InteractorBase> pair in map)
+        //     {
+        //         yield return Routine.StartRoutine(pair.Value.InitializeRepository());
+        //     }
+        // }
+
+        // private IEnumerator StartInteractorsRoutine(Dictionary<Type, InteractorBase> map)
+        // {
+        //     foreach(KeyValuePair<Type, InteractorBase> pair in map)
+        //     {
+        //         yield return Routine.StartRoutine(pair.Value.StartInteractor());
+        //     }
+
+        //     foreach(KeyValuePair<Type, InteractorBase> pair in map)
+        //     {
+        //         yield return Routine.StartRoutine(pair.Value.StartRepository());
+        //     }
+        // }
+
+
+
+
+
     }
 }

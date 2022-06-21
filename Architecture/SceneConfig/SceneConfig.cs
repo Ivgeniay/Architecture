@@ -20,6 +20,8 @@ namespace Architecture
             {
                 case "Main":
                     CreateNewInteractor<PlayerInteractor>();
+                    CreateNewInteractor<PlayerInteractor2>();
+                    CreateNewInteractor<PlayerInteractor3>();
                     Debug.Log("All interactors are created");
                     break;
                 

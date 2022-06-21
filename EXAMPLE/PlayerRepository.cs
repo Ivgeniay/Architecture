@@ -24,7 +24,7 @@ public class PlayerRepository : RepositoryBase
         yield return null;
     }
 
-    public override IEnumerator Start()
+    public override IEnumerator StartRepository()
     {
         yield return new WaitForSeconds(1);
         Debug.Log($"HEY {this} is started!");

@@ -3,7 +3,7 @@ using UnityEngine;
 using Architecture;
 using System.Collections;
 
-public class PlayerRepository : RepositoryBase
+public class PlayerRepository3 : RepositoryBase
 {
     private List<string> inventory;
     private int _health;
@@ -24,7 +24,7 @@ public class PlayerRepository : RepositoryBase
         yield return null;
     }
 
-    public override IEnumerator Start()
+    public override IEnumerator StartRepository()
     {
         yield return new WaitForSeconds(1);
         Debug.Log($"HEY {this} is started!");

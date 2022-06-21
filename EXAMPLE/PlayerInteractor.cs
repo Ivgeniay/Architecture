@@ -27,7 +27,7 @@ public class PlayerInteractor : InteractorBase
     public override IEnumerator StartInteractor()
     {
         yield return Routine.StartRoutine(TestStartInteractor());
-        yield return Routine.StartRoutine(this.repository.InitializeRepository());
+        yield return Routine.StartRoutine(this.repository.StartRepository());
     }
         private IEnumerator TestStartInteractor()
         {

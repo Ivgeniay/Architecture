@@ -17,7 +17,7 @@ public class Test : MonoBehaviour
 
     private void HHH(object obj)
     {
-        Debug.Log($"{App.NumInteractorsAlreadyLoaded} / {App.NumInteractorsAlreadyLoaded.Value} is ready");
+        Debug.Log($"{App.NumInteractorsAlreadyLoaded.Value} / {App.NumOfInteractors} is ready");
     }
 
     void Start()

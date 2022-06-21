@@ -7,6 +7,6 @@ namespace Architecture
     {
         public abstract IEnumerator InitializeRepository();
         public abstract IEnumerator Save();
-        public abstract IEnumerator Start();
+        public abstract IEnumerator StartRepository();
     }
 }

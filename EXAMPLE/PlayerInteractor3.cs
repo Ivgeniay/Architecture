@@ -3,14 +3,14 @@ using Architecture;
 using System.Collections;
 using System;
 
-public class PlayerInteractor : InteractorBase
+public class PlayerInteractor3 : InteractorBase
 {
-    public PlayerInteractor()
+    public PlayerInteractor3()
     {
-        this.repository = new PlayerRepository();
+        this.repository = new PlayerRepository3();
     }
 
-    private PlayerRepository repository;
+    private PlayerRepository3 repository;
 
     public override IEnumerator InitializeInteractor()
     {
@@ -27,7 +27,7 @@ public class PlayerInteractor : InteractorBase
     public override IEnumerator StartInteractor()
     {
         yield return Routine.StartRoutine(TestStartInteractor());
-        yield return Routine.StartRoutine(this.repository.InitializeRepository());
+        yield return Routine.StartRoutine(this.repository.StartRepository());
     }
         private IEnumerator TestStartInteractor()
         {
