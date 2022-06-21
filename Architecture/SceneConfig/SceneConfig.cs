@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Architecture
 {
-    public class SceneConfig
+    public sealed class SceneConfig
     {
         private Scene scene;
         public SceneConfig(Scene scene)

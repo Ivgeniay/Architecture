@@ -1,18 +1,24 @@
 using UnityEngine;
 using Architecture;
 using Random = UnityEngine.Random;
+using Review;
 
 public class Test : MonoBehaviour
 {
     private PlayerInteractor player;
 
+
     void Awake()
     {
         App.Initialize();
         App.onLoadedAppEvent += onLoadedAppHandler;
-        player = App.GetInteractor<PlayerInteractor>();
+        App.NumInteractorsAlreadyLoaded.OnChange += HHH;
     }
 
+    private void HHH(object obj)
+    {
+        Debug.Log($"{App.NumInteractorsAlreadyLoaded} / {App.NumInteractorsAlreadyLoaded.Value} is ready");
+    }
 
     void Start()
     {

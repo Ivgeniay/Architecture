@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using Review;
 
 namespace Architecture
 {
@@ -25,6 +26,14 @@ namespace Architecture
         /// </summary> 
         public static bool IsLoaded() => scene.IsLoaded;
         private static Scene scene;
+        /// <summary>  
+        ///  Observable variable of type int32. The Value property reflects the number of initialized interactors. There is a subscription to the value change event - OnChange.
+        /// </summary> 
+        public static ReviewVariable<int> NumInteractorsAlreadyLoaded { get; private set;}
+        /// <summary>  
+        ///  Return num of interactors in library.
+        /// </summary> 
+        public static int NumOfInteractors{get; private set;}
 
 
 
@@ -36,11 +45,21 @@ namespace Architecture
             return scene.IsLoaded? scene.GetInteractor<T>() : null;
         }
 
+
         private static void CreateScene()
         {
-            if (scene == null)
-                scene = new Scene();
+            if (scene != null) return;
+
+            scene = new Scene();
             scene.onLoadedEvent += onLoaded;
+            NumInteractorsAlreadyLoaded = new();
+            scene.NumOfInteractorsWereLoaded.OnChange += NumOfInteractorsAlreadyLoaded;
+            NumOfInteractors = scene.NumOfInteractors;
+        }
+
+        private static void NumOfInteractorsAlreadyLoaded(object obj)
+        {
+            NumInteractorsAlreadyLoaded.Value = scene.NumOfInteractorsWereLoaded.Value;
         }
 
         private static void onLoaded(string SceneName)

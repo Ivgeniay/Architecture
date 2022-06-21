@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Review;
 
 namespace Architecture
 {
-    public class Scene
+    public sealed class Scene
     {
         /// <summary>  
         ///  Event fired when all interactors and their repositories have finished loading.
@@ -16,11 +17,13 @@ namespace Architecture
         {
             interactorsPool = new();
             repositoryPool = new();
+            NumOfInteractorsWereLoaded = new();
 
             SceneName = SceneManager.GetActiveScene().name;
             config = new SceneConfig(this);
 
             interactorsPool.interactorsMap = config.CreateAllInteractors();
+            NumOfInteractors = interactorsPool.interactorsMap.Count;
             
             Routine.StartRoutine(StartArchitecture(interactorsPool.interactorsMap));
         }
@@ -30,6 +33,8 @@ namespace Architecture
         /// </summary> 
         public bool IsLoaded{get; private set;}
         public string SceneName {get; private set;}
+        public ReviewVariable<int> NumOfInteractorsWereLoaded;
+        public int NumOfInteractors{get; private set;}
         private SceneConfig config;
         private InteractorsPool interactorsPool;
         private RepositoriesPool repositoryPool;
@@ -52,7 +57,6 @@ namespace Architecture
             this.IsLoaded = true;
             onLoadedEvent?.Invoke(SceneName);
         }
-
 
         private IEnumerator InitializeInteractorsRoutine(Dictionary<Type, InteractorBase> map)
         {
@@ -77,9 +81,8 @@ namespace Architecture
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
                 yield return Routine.StartRoutine(pair.Value.StartRepository());
+                NumOfInteractorsWereLoaded.Value++;
             }
         }
-
-
     }
 }
