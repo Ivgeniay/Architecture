@@ -21,7 +21,7 @@ namespace Architecture
                 case "Main":
                     CreateNewInteractor<PlayerInteractor>();
                     CreateNewInteractor<PlayerInteractor2>();
-                    CreateNewInteractor<PlayerInteractor3>();
+                    CreateNewInteractor<StatisticService>();
                     Debug.Log("All interactors are created");
                     break;
                 

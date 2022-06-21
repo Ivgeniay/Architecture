@@ -12,10 +12,10 @@ public class Test : MonoBehaviour
     {
         App.Initialize();
         App.onLoadedAppEvent += onLoadedAppHandler;
-        App.NumInteractorsAlreadyLoaded.OnChange += HHH;
+        App.NumInteractorsAlreadyLoaded.OnChange += MsgLogNumOfInteractorsLoaded;
     }
 
-    private void HHH(object obj)
+    private void MsgLogNumOfInteractorsLoaded(object obj)
     {
         Debug.Log($"{App.NumInteractorsAlreadyLoaded.Value} / {App.NumOfInteractors} is ready");
     }

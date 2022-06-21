@@ -16,7 +16,7 @@ public class PlayerRepository : RepositoryBase
     public override IEnumerator InitializeRepository()
     {
         yield return new WaitForSeconds(1);
-        Debug.Log($"HEY {this} is initialized!");
+        Debug.Log($"{this} is initialized!");
     }
 
     public override IEnumerator Save()
@@ -27,7 +27,7 @@ public class PlayerRepository : RepositoryBase
     public override IEnumerator StartRepository()
     {
         yield return new WaitForSeconds(1);
-        Debug.Log($"HEY {this} is started!");
+        Debug.Log($"{this} is started!");
     }
 
 

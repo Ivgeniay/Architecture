@@ -16,7 +16,6 @@ namespace Architecture
         public Scene()
         {
             interactorsPool = new();
-            repositoryPool = new();
             NumOfInteractorsWereLoaded = new();
 
             SceneName = SceneManager.GetActiveScene().name;
@@ -31,35 +30,31 @@ namespace Architecture
         /// <summary>  
         ///  The loading state of the application architecture.
         /// </summary> 
-        public bool IsLoaded{get; private set;}
-        public string SceneName {get; private set;}
-        public ReviewVariable<int> NumOfInteractorsWereLoaded;
-        public int NumOfInteractors{get; private set;}
-        private SceneConfig config;
-        private InteractorsPool interactorsPool;
-        private RepositoriesPool repositoryPool;
+        public bool IsLoaded{get; private set;}                     //
+        public string SceneName {get; private set;}                 //Current scene name.
+        public ReviewVariable<int> NumOfInteractorsWereLoaded;      //Number of interactor who was already loaded.
+        public int NumOfInteractors{get; private set;}              //Number of interactor in the dictionary.
+        private SceneConfig config;                                 //Scene configuration. There are all interactors.
+        private InteractorsPool interactorsPool;                    //There is dictionary of interactors
+
+
 
         public T GetInteractor<T>() where T: InteractorBase
         {
             var type = typeof(T);
-            return (T)interactorsPool.interactorsMap[type];
+            return interactorsPool.interactorsMap.ContainsKey(type) ? (T)interactorsPool.interactorsMap[type] : null;
         }
 
         private IEnumerator StartArchitecture(Dictionary<Type, InteractorBase> map)
         {
-            this.IsLoaded = false;
 
-            yield return Routine.StartRoutine(InitializeInteractorsRoutine1(map));
-            // yield return Routine.StartRoutine(InitializeInteractorsRoutine(map));
-            // Debug.Log("All interactors are initialized");
-            // yield return Routine.StartRoutine(StartInteractorsRoutine(map));
-            // Debug.Log("All interactors started");
+            yield return Routine.StartRoutine(InitializeInteractorsRoutine(map));
 
             this.IsLoaded = true;
             onLoadedEvent?.Invoke(SceneName);
         }
 
-        private IEnumerator InitializeInteractorsRoutine1(Dictionary<Type, InteractorBase> map)
+        private IEnumerator InitializeInteractorsRoutine(Dictionary<Type, InteractorBase> map)
         {
             foreach(KeyValuePair<Type, InteractorBase> pair in map)
             {
@@ -70,37 +65,5 @@ namespace Architecture
                 NumOfInteractorsWereLoaded.Value++;
             }
         }
-
-        // private IEnumerator InitializeInteractorsRoutine(Dictionary<Type, InteractorBase> map)
-        // {
-        //     foreach(KeyValuePair<Type, InteractorBase> pair in map)
-        //     {
-        //         NumOfInteractorsWereLoaded.Value++;
-        //         yield return Routine.StartRoutine(pair.Value.InitializeInteractor());
-        //     }
-
-        //     foreach(KeyValuePair<Type, InteractorBase> pair in map)
-        //     {
-        //         yield return Routine.StartRoutine(pair.Value.InitializeRepository());
-        //     }
-        // }
-
-        // private IEnumerator StartInteractorsRoutine(Dictionary<Type, InteractorBase> map)
-        // {
-        //     foreach(KeyValuePair<Type, InteractorBase> pair in map)
-        //     {
-        //         yield return Routine.StartRoutine(pair.Value.StartInteractor());
-        //     }
-
-        //     foreach(KeyValuePair<Type, InteractorBase> pair in map)
-        //     {
-        //         yield return Routine.StartRoutine(pair.Value.StartRepository());
-        //     }
-        // }
-
-
-
-
-
     }
 }

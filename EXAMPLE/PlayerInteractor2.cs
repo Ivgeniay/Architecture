@@ -21,7 +21,7 @@ public class PlayerInteractor2 : InteractorBase
         private IEnumerator TestInitializeInteractor()
         {
             yield return new WaitForSeconds(2);
-            Debug.Log($"HEY {this} is initialized!");
+            Debug.Log($"{this} is initialized!");
         }
 
     public override IEnumerator StartInteractor()
@@ -32,7 +32,7 @@ public class PlayerInteractor2 : InteractorBase
         private IEnumerator TestStartInteractor()
         {
             yield return new WaitForSeconds(1);
-            Debug.Log($"HEY {this} is started!");
+            Debug.Log($"{this} is started!");
         }
 
     public void TakeDamage(int dmg)

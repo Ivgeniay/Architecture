@@ -1,3 +1,4 @@
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using System.Linq;
 
 namespace TaskQueues
 {
-    public class MainQueue : IMainQueue
+    public sealed class MainQueue : IMainQueue
     {
         public MainQueue()
         {
@@ -14,6 +15,7 @@ namespace TaskQueues
             QueueDefaultPriority = new Queue<Action>();
             QueueHighPriority = new Queue<Action>();
         }
+
 
         public Action<object, string> onActionIsDoneEvent;
         private Queue<Action> QueueLowPriority;
@@ -58,9 +60,11 @@ namespace TaskQueues
 
         private void NextTask (Action callback)
         {
+
             callback?.Invoke();
             //ActionIsDone(this, "Yo");
         }
+        
 
         private void ActionIsDone(object sender, string msg)
         {
