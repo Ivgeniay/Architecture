@@ -29,3 +29,4 @@
 
             Architecture:
             App - фасад над архитектурой.
+                Основа - Interactors и их Repositories;
