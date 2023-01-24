@@ -1,4 +1,6 @@
-﻿using Architecture.Root._Scene;
+﻿using Architecture.Root._Controller;
+using Architecture.Root._Repository;
+using Architecture.Root._Scene;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +16,8 @@ namespace Architecture.Root.Scene
         public event Action OnSceneStart;
 
         private List<SceneInstaller> sceneInstallers;
+
+        private SceneInstaller currentScene;
         private string sceneName;
         public SceneController(List<SceneInstaller> sceneInstallers) { 
             this.sceneInstallers = sceneInstallers;
@@ -23,16 +27,26 @@ namespace Architecture.Root.Scene
 
 
         public void InitCurrentScene() {
-            var scene = sceneInstallers.Where(el => el.SceneName == sceneName).First();
-            scene.InitializeSceneAsync();
+            currentScene = sceneInstallers.Where(el => el.SceneName == sceneName).First();
+            currentScene.InitializeSceneAsync();
 
-            scene.OnSceneAwake += OnSceneAwake_;
-            scene.OnSceneInitialized += OnSceneInitialized_;
-            scene.OnSceneStart += OnSceneStart_;
+            currentScene.OnSceneAwake += OnSceneAwake_;
+            currentScene.OnSceneInitialized += OnSceneInitialized_;
+            currentScene.OnSceneStart += OnSceneStart_;
         }
 
         private void OnSceneAwake_() => OnSceneAwake?.Invoke();
         private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
         private void OnSceneStart_() => OnSceneStart?.Invoke();
+
+        public T GetRepository<T>() where T : Repository
+        {
+            return currentScene.GetRepository<T>();
+        }
+
+        public T GetController<T>() where T : Controller
+        {
+            return currentScene.GetController<T>();
+        }
     }
 }

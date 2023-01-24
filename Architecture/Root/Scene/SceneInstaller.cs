@@ -13,6 +13,7 @@ namespace Architecture.Root._Scene
         [SerializeField] public string SceneName;
         [SerializeField] public SceneSetting sceneSetting;
 
+        public event Action OnResourceCreate;
         public event Action OnSceneAwake;
         public event Action OnSceneInitialized;
         public event Action OnSceneStart;
@@ -32,19 +33,20 @@ namespace Architecture.Root._Scene
         {
             yield return null;
 
-            controllersPool.CreateControllers();
             repositoriesPool.CreateRepositories();
+            controllersPool.CreateControllers();
+            OnResourceCreate?.Invoke();
 
-            yield return controllersPool.OnAwakeControllers();
             yield return repositoriesPool.OnAwakeRepositories();
+            yield return controllersPool.OnAwakeControllers();
             OnSceneAwake?.Invoke();
 
-            yield return controllersPool.OnInitializeControllers();
             yield return repositoriesPool.OnInitializeRepositories();
+            yield return controllersPool.OnInitializeControllers();
             OnSceneInitialized?.Invoke();
 
-            yield return controllersPool.OnStartControllers();
             yield return repositoriesPool.OnStartRepositories();
+            yield return controllersPool.OnStartControllers();
             OnSceneStart?.Invoke();
 
         }
