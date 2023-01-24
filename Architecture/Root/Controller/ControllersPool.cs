@@ -19,7 +19,7 @@ namespace Architecture.Root._Controller
 
         public void CreateControllers()
         {
-            controllersPool = sceneSetting.CreateControllers();
+            controllersPool = sceneSetting.BindControllers();
         }
 
         public IEnumerator OnAwakeControllers() {

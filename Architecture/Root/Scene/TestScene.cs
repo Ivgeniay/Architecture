@@ -9,20 +9,20 @@ namespace Assets._Project.Scripts.Architecture.Root.Scene
 {
     internal class TestScene : SceneSetting
     {
-        public override Dictionary<Type, Controller> CreateControllers()
+        public override Dictionary<Type, Controller> BindControllers()
         {
             var controller = new Dictionary<Type, Controller>();
 
-            CreateController<PlayerController>(controller);
+            BindController<PlayerController>(controller);
 
             return controller;
         }
 
-        public override Dictionary<Type, Repository> CreateRepositories()
+        public override Dictionary<Type, Repository> BindRepositories()
         {
             var repos = new Dictionary<Type, Repository>();
 
-            CreateRepository<PlayerRepository>(repos);
+            BindRepository<PlayerRepository>(repos);
 
             return repos;
         }

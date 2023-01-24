@@ -20,7 +20,7 @@ namespace Architecture.Root._Repository
 
         public void CreateRepositories()
         {
-            repositoriesPool = sceneSetting.CreateRepositories();
+            repositoriesPool = sceneSetting.BindRepositories();
         }
 
         public IEnumerator OnAwakeRepositories()
