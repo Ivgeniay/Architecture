@@ -1,5 +1,7 @@
-﻿using Architecture.Root._Scene;
+﻿using Architecture.Root._Controller;
+using Architecture.Root._Scene;
 using Assets._Project.Scripts.Player;
+using FluffyUnderware.Curvy.Controllers;
 using Sirenix.Utilities;
 using System;
 using System.Collections;
@@ -9,6 +11,8 @@ namespace Architecture.Root._Repository
 {
     internal class RepositoriesPool
     {
+        public event Action<object, LoadingEventType> OnRepositoryEvent;
+
         private Dictionary<Type, Repository> repositoriesPool;
         private SceneSetting sceneSetting;
 
@@ -25,17 +29,29 @@ namespace Architecture.Root._Repository
 
         public IEnumerator OnAwakeRepositories()
         {
-            yield return repositoriesPool.ForEach(el => Routine.StartRoutine(el.Value.OnAwake()));
+            foreach (var repository in repositoriesPool)
+            {
+                yield return Routine.StartRoutine(repository.Value.OnAwake());
+                OnRepositoryEvent?.Invoke(repository.Value, LoadingEventType.Awake);
+            }
         }
 
         public IEnumerator OnInitializeRepositories()
         {
-            yield return repositoriesPool.ForEach(el => Routine.StartRoutine(el.Value.Initialize()));
+            foreach (var repository in repositoriesPool)
+            {
+                yield return Routine.StartRoutine(repository.Value.Initialize());
+                OnRepositoryEvent?.Invoke(repository.Value, LoadingEventType.Initialized);
+            }
         }
 
         public IEnumerator OnStartRepositories()
         {
-            yield return repositoriesPool.ForEach(el => Routine.StartRoutine(el.Value.OnStart()));
+            foreach (var repository in repositoriesPool)
+            {
+                yield return Routine.StartRoutine(repository.Value.OnStart());
+                OnRepositoryEvent?.Invoke(repository.Value, LoadingEventType.Start);
+            }
         }
 
         public T GetRepository<T>() where T : Repository

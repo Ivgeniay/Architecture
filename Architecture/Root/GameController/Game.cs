@@ -14,10 +14,36 @@ namespace Architecture.Root.GameController
 {
     internal class Game : MonoBehaviour
     {
+        /// <summary>
+        /// Singleton of game machine state
+        /// </summary>
         public static Game Instance { get; private set; }
-        
+
+        /// <summary>
+        /// An event that allows to get data about which controller was loaded
+        /// </summary>
+        public event Action<object, LoadingEventType> OnControllerEvent;
+        /// <summary>
+        /// An event that allows to get data about which repository was loaded
+        /// </summary>
+        public event Action<object, LoadingEventType> OnRepositoryEvent;
+
+
+        /// <summary>
+        /// An event that allows you to receive data that all controllers and repositories have been created, but have not yet awaked, initialized, and started
+        /// </summary>
+        public event Action OnResourcesCreate;
+        /// <summary>
+        /// An event that allows you to receive data that all controllers and repositories have been created and awaked, but not yet initialized, and started.
+        /// </summary>
         public event Action OnSceneAwake;
+        /// <summary>
+        /// An event that allows you to receive data that all controllers and repositories have been created, awaked and initialized, but not started
+        /// </summary>
         public event Action OnSceneInitialized;
+        /// <summary>
+        /// An event that allows you to receive data that all controllers and repositories have been created, awaked, initialized, and started.
+        /// </summary>
         public event Action OnSceneStart;
 
         private List<SceneInstaller> scenes = new List<SceneInstaller>();
@@ -36,7 +62,7 @@ namespace Architecture.Root.GameController
             }
 
 
-            Destroy(this);
+            Destroy(gameObject);
         }
 
         public void GameInitialize()
@@ -44,6 +70,10 @@ namespace Architecture.Root.GameController
             scenes = Instance.transform.GetComponentsInChildren<SceneInstaller>(true).ToList<SceneInstaller>();
             sceneController = new SceneController(scenes);
 
+            sceneController.OnControllerEvent += OnControllerEvent_;
+            sceneController.OnRepositoryEvent += OnRepositoryEvent_;
+
+            sceneController.OnResourcesCreate += OnResourcesCreate_;
             sceneController.OnSceneAwake += OnSceneAwake_;
             sceneController.OnSceneInitialized += OnSceneInitialized_;
             sceneController.OnSceneStart += OnSceneStart_;
@@ -51,10 +81,6 @@ namespace Architecture.Root.GameController
             sceneController.InitCurrentScene();
         }
 
-        private void OnActiveSceneChanged(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1) => GameInitialize();
-        private void OnSceneAwake_() => OnSceneAwake?.Invoke();
-        private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
-        private void OnSceneStart_() => OnSceneStart?.Invoke();
 
         void Update()
         {
@@ -71,5 +97,17 @@ namespace Architecture.Root.GameController
         {
             return sceneController.GetController<T>();
         }
+
+        private void OnApplicationQuit()
+        {
+            sceneController.ExitCurrentScene();
+        }
+        private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
+        private void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
+        private void OnResourcesCreate_() => OnResourcesCreate?.Invoke();
+        private void OnActiveSceneChanged(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1) => GameInitialize();
+        private void OnSceneAwake_() => OnSceneAwake?.Invoke();
+        private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
+        private void OnSceneStart_() => OnSceneStart?.Invoke();
     }
 }

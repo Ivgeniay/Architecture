@@ -9,6 +9,8 @@ namespace Architecture.Root._Controller
 {
     internal class ControllersPool
     {
+        public event Action<object, LoadingEventType> OnControllerEvent;
+
         private Dictionary<Type, Controller> controllersPool;
         private SceneSetting sceneSetting;
 
@@ -23,15 +25,30 @@ namespace Architecture.Root._Controller
         }
 
         public IEnumerator OnAwakeControllers() {
-            yield return controllersPool.ForEach(el => Routine.StartRoutine(el.Value.OnAwake()));
+
+            foreach(var contoller in controllersPool)
+            {
+                yield return Routine.StartRoutine(contoller.Value.OnAwake());
+                OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Awake);
+            }
         }
 
         public IEnumerator OnInitializeControllers() {
-            yield return controllersPool.ForEach(el => Routine.StartRoutine(el.Value.Initialize()));
+
+            foreach (var contoller in controllersPool)
+            {
+                yield return Routine.StartRoutine(contoller.Value.Initialize());
+                OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Initialized);
+            }
         }
 
         public IEnumerator OnStartControllers() {
-            yield return controllersPool.ForEach(el => Routine.StartRoutine(el.Value.OnStart()));
+
+            foreach (var contoller in controllersPool)
+            {
+                yield return Routine.StartRoutine(contoller.Value.OnStart());
+                OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Start);
+            }
         }
 
         public T GetController<T>() where T : Controller

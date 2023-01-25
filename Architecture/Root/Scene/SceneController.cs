@@ -11,6 +11,10 @@ namespace Architecture.Root.Scene
 {
     internal class SceneController
     {
+        public event Action<object, LoadingEventType> OnControllerEvent;
+        public event Action<object, LoadingEventType> OnRepositoryEvent;
+
+        public event Action OnResourcesCreate;
         public event Action OnSceneAwake;
         public event Action OnSceneInitialized;
         public event Action OnSceneStart;
@@ -30,14 +34,27 @@ namespace Architecture.Root.Scene
             currentScene = sceneInstallers.Where(el => el.SceneName == sceneName).First();
             currentScene.InitializeSceneAsync();
 
+
+            currentScene.OnControllerEvent += OnControllerEvent_;
+            currentScene.OnRepositoryEvent += OnRepositoryEvent_;
+
+            currentScene.OnResourcesCreate += OnResourcesCreate_;
             currentScene.OnSceneAwake += OnSceneAwake_;
             currentScene.OnSceneInitialized += OnSceneInitialized_;
             currentScene.OnSceneStart += OnSceneStart_;
         }
 
-        private void OnSceneAwake_() => OnSceneAwake?.Invoke();
-        private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
-        private void OnSceneStart_() => OnSceneStart?.Invoke();
+
+        public void ExitCurrentScene()
+        {
+            currentScene.OnControllerEvent -= OnControllerEvent_;
+            currentScene.OnRepositoryEvent -= OnRepositoryEvent_;
+
+            currentScene.OnResourcesCreate -= OnResourcesCreate_;
+            currentScene.OnSceneAwake -= OnSceneAwake_;
+            currentScene.OnSceneInitialized -= OnSceneInitialized_;
+            currentScene.OnSceneStart -= OnSceneStart_;
+        }
 
         public T GetRepository<T>() where T : Repository
         {
@@ -48,5 +65,12 @@ namespace Architecture.Root.Scene
         {
             return currentScene.GetController<T>();
         }
+
+        private void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
+        private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
+        private void OnResourcesCreate_() => OnResourcesCreate?.Invoke();
+        private void OnSceneAwake_() => OnSceneAwake?.Invoke();
+        private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
+        private void OnSceneStart_() => OnSceneStart?.Invoke();
     }
 }

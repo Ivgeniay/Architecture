@@ -13,7 +13,11 @@ namespace Architecture.Root._Scene
         [SerializeField] public string SceneName;
         [SerializeField] public SceneSetting sceneSetting;
 
-        public event Action OnResourceCreate;
+
+        public event Action<object, LoadingEventType> OnControllerEvent;
+        public event Action<object, LoadingEventType> OnRepositoryEvent;
+
+        public event Action OnResourcesCreate;
         public event Action OnSceneAwake;
         public event Action OnSceneInitialized;
         public event Action OnSceneStart;
@@ -25,6 +29,9 @@ namespace Architecture.Root._Scene
         private void Awake() {
             controllersPool = new ControllersPool(sceneSetting);
             repositoriesPool = new RepositoriesPool(sceneSetting);
+
+            controllersPool.OnControllerEvent += OnControllerEvent_;
+            repositoriesPool.OnRepositoryEvent += OnRepositoryEvent_;
         }
 
         public void InitializeSceneAsync() => this.StartCoroutine(Initialize());
@@ -35,7 +42,7 @@ namespace Architecture.Root._Scene
 
             repositoriesPool.CreateRepositories();
             controllersPool.CreateControllers();
-            OnResourceCreate?.Invoke();
+            OnResourcesCreate?.Invoke();
 
             yield return repositoriesPool.OnAwakeRepositories();
             yield return controllersPool.OnAwakeControllers();
@@ -58,6 +65,9 @@ namespace Architecture.Root._Scene
         public T GetController<T>() where T : Controller {
             return controllersPool.GetController<T>();
         }
+
+        private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
+        private void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
 
     }
 }

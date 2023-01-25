@@ -21,21 +21,16 @@ namespace Assets._Project.Scripts.Player
 
         public override IEnumerator OnAwake()
         {
-            base.OnAwake();
-            Debug.Log("Repository OnAwake");
             yield return null;
         }
 
         public override IEnumerator Initialize()
         {
-            Debug.Log("Repository Initialized");
             coins = PlayerPrefs.GetInt(KEY);
             yield return null;
         }
         public override IEnumerator OnStart()
         {
-            base.OnStart();
-            Debug.Log("Repository OnStart");
             yield return null;
         }
 
