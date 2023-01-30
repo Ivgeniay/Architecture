@@ -18,16 +18,19 @@ namespace Assets._Project.Scripts.Player
         {
             playerRepository = Game.Instance.GetRepository<PlayerRepository>();
             yield return null;
+            Debug.Log("PlayerController OnAwake");
         }
 
         public override IEnumerator Initialize()
         {
             yield return null;
+            Debug.Log("PlayerController OnInitialized");
         }
 
         public override IEnumerator OnStart()
         {
             yield return null;
+            Debug.Log("PlayerController OnStart");
         }
 
 

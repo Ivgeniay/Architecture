@@ -1,13 +1,13 @@
 ﻿using Architecture.Root._Controller;
 using Architecture.Root._Repository;
-using Architecture.Root._Scene;
+using Architecture.Root;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
-namespace Architecture.Root.Scene
+namespace Architecture.Root._Scene
 {
     internal class SceneController
     {
@@ -21,7 +21,7 @@ namespace Architecture.Root.Scene
 
         private List<SceneInstaller> sceneInstallers;
 
-        private SceneInstaller currentScene;
+        private Installer currentScene;
         private string sceneName;
         public SceneController(List<SceneInstaller> sceneInstallers) { 
             this.sceneInstallers = sceneInstallers;
@@ -32,29 +32,23 @@ namespace Architecture.Root.Scene
 
         public void InitCurrentScene() {
             currentScene = sceneInstallers.Where(el => el.SceneName == sceneName).First();
-            currentScene.InitializeSceneAsync();
-
 
             currentScene.OnControllerEvent += OnControllerEvent_;
             currentScene.OnRepositoryEvent += OnRepositoryEvent_;
 
             currentScene.OnResourcesCreate += OnResourcesCreate_;
-            currentScene.OnSceneAwake += OnSceneAwake_;
-            currentScene.OnSceneInitialized += OnSceneInitialized_;
-            currentScene.OnSceneStart += OnSceneStart_;
+            currentScene.OnAwake += OnSceneAwake_;
+            currentScene.OnInitialized += OnSceneInitialized_;
+            currentScene.OnStart += OnSceneStart_;
+
+            currentScene.InitializeAsync();
         }
 
 
         public void ExitCurrentScene()
         {
-            currentScene.OnControllerEvent -= OnControllerEvent_;
-            currentScene.OnRepositoryEvent -= OnRepositoryEvent_;
-
-            currentScene.OnResourcesCreate -= OnResourcesCreate_;
-            currentScene.OnSceneAwake -= OnSceneAwake_;
-            currentScene.OnSceneInitialized -= OnSceneInitialized_;
-            currentScene.OnSceneStart -= OnSceneStart_;
         }
+
 
         public T GetRepository<T>() where T : Repository
         {
@@ -66,11 +60,24 @@ namespace Architecture.Root.Scene
             return currentScene.GetController<T>();
         }
 
+        private void Unsubscribe()
+        {
+            currentScene.OnControllerEvent -= OnControllerEvent_;
+            currentScene.OnRepositoryEvent -= OnRepositoryEvent_;
+
+            currentScene.OnResourcesCreate -= OnResourcesCreate_;
+            currentScene.OnAwake -= OnSceneAwake_;
+            currentScene.OnInitialized -= OnSceneInitialized_;
+            currentScene.OnStart -= OnSceneStart_;
+        }
         private void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
         private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
         private void OnResourcesCreate_() => OnResourcesCreate?.Invoke();
         private void OnSceneAwake_() => OnSceneAwake?.Invoke();
         private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
-        private void OnSceneStart_() => OnSceneStart?.Invoke();
+        private void OnSceneStart_() {
+            OnSceneStart?.Invoke();
+            Unsubscribe();
+        }
     }
 }

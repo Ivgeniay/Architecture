@@ -1,5 +1,4 @@
 ﻿using Architecture.Root.GameController;
-using FluffyUnderware.Curvy.Controllers;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;

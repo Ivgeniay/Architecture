@@ -1,16 +1,13 @@
 ﻿using Architecture.Root._Controller;
 using Architecture.Root._Repository;
-using Architecture.Root;
 using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Architecture.Root._Scene
+namespace Architecture.Root.Project
 {
-    internal class SceneInstaller : Installer
+    internal class ProjectInstaller : Installer
     {
-        [SerializeField] public string SceneName;
-
         public override event Action<object, LoadingEventType> OnControllerEvent;
         public override event Action<object, LoadingEventType> OnRepositoryEvent;
 
@@ -58,6 +55,4 @@ namespace Architecture.Root._Scene
         private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
         private void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
     }
-    
-    
 }

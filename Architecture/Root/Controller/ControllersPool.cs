@@ -1,7 +1,4 @@
-﻿using Architecture.Root._Scene;
-using Assets._Project.Scripts.Player;
-using Sirenix.Utilities;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,9 +9,9 @@ namespace Architecture.Root._Controller
         public event Action<object, LoadingEventType> OnControllerEvent;
 
         private Dictionary<Type, Controller> controllersPool;
-        private SceneSetting sceneSetting;
+        private InstallerSetting sceneSetting;
 
-        public ControllersPool(SceneSetting sceneSetting) {
+        public ControllersPool(InstallerSetting sceneSetting) {
             controllersPool = new Dictionary<Type, Controller>();
             this.sceneSetting = sceneSetting;
         }

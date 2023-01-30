@@ -1,7 +1,7 @@
 ﻿using Architecture.Root._Controller;
 using Architecture.Root._Repository;
 using Architecture.Root._Scene;
-using Architecture.Root.Scene;
+using Architecture.Root.Project;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,6 +19,8 @@ namespace Architecture.Root.GameController
         /// </summary>
         public static Game Instance { get; private set; }
 
+        public bool isLoaded { get; private set; } = false;
+
         /// <summary>
         /// An event that allows to get data about which controller was loaded
         /// </summary>
@@ -28,21 +30,37 @@ namespace Architecture.Root.GameController
         /// </summary>
         public event Action<object, LoadingEventType> OnRepositoryEvent;
 
+        /// <summary>
+        /// An event that allows you to receive data that all controllers and repositories have been created, but have not yet awaked, initialized, and started in the project
+        /// </summary>
+        public event Action OnProjectResourcesCreate;
+        /// <summary>
+        /// An event that allows you to receive data that all controllers and repositories have been created and awaked, but not yet initialized, and started in the project
+        /// </summary>
+        public event Action OnProjectResourcesAwake;
+        /// <summary>
+        /// An event that allows you to receive data that all controllers and repositories have been created, awaked and initialized, but not started in the project
+        /// </summary>
+        public event Action OnProjectResourcesInitialized;
+        /// <summary>
+        /// An event that allows you to receive data that all controllers and repositories have been created, awaked, initialized, and started in the project
+        /// </summary>
+        public event Action OnProjectResourcesStart;
 
         /// <summary>
-        /// An event that allows you to receive data that all controllers and repositories have been created, but have not yet awaked, initialized, and started
+        /// An event that allows you to receive data that all controllers and repositories have been created, but have not yet awaked, initialized, and started in the scene
         /// </summary>
         public event Action OnResourcesCreate;
         /// <summary>
-        /// An event that allows you to receive data that all controllers and repositories have been created and awaked, but not yet initialized, and started.
+        /// An event that allows you to receive data that all controllers and repositories have been created and awaked, but not yet initialized, and started in the scene
         /// </summary>
         public event Action OnSceneAwake;
         /// <summary>
-        /// An event that allows you to receive data that all controllers and repositories have been created, awaked and initialized, but not started
+        /// An event that allows you to receive data that all controllers and repositories have been created, awaked and initialized, but not started in the scene
         /// </summary>
         public event Action OnSceneInitialized;
         /// <summary>
-        /// An event that allows you to receive data that all controllers and repositories have been created, awaked, initialized, and started.
+        /// An event that allows you to receive data that all controllers and repositories have been created, awaked, initialized, and started in the scene
         /// </summary>
         public event Action OnSceneStart;
 
@@ -67,18 +85,76 @@ namespace Architecture.Root.GameController
 
         public void GameInitialize()
         {
+            //Project init
+            if (ProjectController.isLoaded == false)
+            {
+                ProjectController.OnProjectResourcesCreate += OnProjectResourcesCreate_;
+                ProjectController.OnProjectResourcesAwake += OnProjectResourcesAwake_;
+                ProjectController.OnProjectResourcesInitialized += OnProjectResourcesInitialized_;
+                ProjectController.OnProjectResourcesStart += OnProjectResourcesStart_;
+
+                ProjectController.OnControllerEvent += OnControllerEvent_;
+                ProjectController.OnRepositoryEvent += OnRepositoryEvent_;
+
+
+                var projectInstaller = Instance.transform.GetComponentInChildren<ProjectInstaller>(true);
+                if (projectInstaller is not null) {
+                    ProjectController.InitProjectController(projectInstaller);
+                }
+            }
+            else
+            {
+                OnProjectResourcesCreate_();
+                OnProjectResourcesAwake_();
+                OnProjectResourcesInitialized_();
+                OnProjectResourcesStart_();
+            }
+
+            //Scene init
             scenes = Instance.transform.GetComponentsInChildren<SceneInstaller>(true).ToList<SceneInstaller>();
-            sceneController = new SceneController(scenes);
 
-            sceneController.OnControllerEvent += OnControllerEvent_;
-            sceneController.OnRepositoryEvent += OnRepositoryEvent_;
+            if (scenes.Count != 0)
+            {
+                sceneController = new SceneController(scenes);
 
-            sceneController.OnResourcesCreate += OnResourcesCreate_;
-            sceneController.OnSceneAwake += OnSceneAwake_;
-            sceneController.OnSceneInitialized += OnSceneInitialized_;
-            sceneController.OnSceneStart += OnSceneStart_;
+                sceneController.OnControllerEvent += OnControllerEvent_;
+                sceneController.OnRepositoryEvent += OnRepositoryEvent_;
 
-            sceneController.InitCurrentScene();
+                sceneController.OnResourcesCreate += OnResourcesCreate_;
+                sceneController.OnSceneAwake += OnSceneAwake_;
+                sceneController.OnSceneInitialized += OnSceneInitialized_;
+                sceneController.OnSceneStart += OnSceneStart_;
+
+                sceneController.InitCurrentScene();
+            }
+            else
+            {
+                OnResourcesCreate_();
+                OnSceneAwake_();
+                OnSceneInitialized_();
+                OnSceneStart_();
+            }
+        }
+
+        private void UnsubscribeScene()
+        {
+            sceneController.OnControllerEvent -= OnControllerEvent_;
+            sceneController.OnRepositoryEvent -= OnRepositoryEvent_;
+
+            sceneController.OnResourcesCreate -= OnResourcesCreate_;
+            sceneController.OnSceneAwake -= OnSceneAwake_;
+            sceneController.OnSceneInitialized -= OnSceneInitialized_;
+            sceneController.OnSceneStart -= OnSceneStart_;
+        }
+        private void UnsubscribeProject()
+        {
+            ProjectController.OnProjectResourcesCreate -= OnProjectResourcesCreate_;
+            ProjectController.OnProjectResourcesAwake -= OnProjectResourcesAwake_;
+            ProjectController.OnProjectResourcesInitialized -= OnProjectResourcesInitialized_;
+            ProjectController.OnProjectResourcesStart -= OnProjectResourcesStart_;
+
+            ProjectController.OnControllerEvent -= OnControllerEvent_;
+            ProjectController.OnRepositoryEvent -= OnRepositoryEvent_;
         }
 
 
@@ -108,6 +184,15 @@ namespace Architecture.Root.GameController
         private void OnActiveSceneChanged(UnityEngine.SceneManagement.Scene arg0, UnityEngine.SceneManagement.Scene arg1) => GameInitialize();
         private void OnSceneAwake_() => OnSceneAwake?.Invoke();
         private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
-        private void OnSceneStart_() => OnSceneStart?.Invoke();
+        private void OnSceneStart_() {
+            isLoaded = true;
+            OnSceneStart?.Invoke();
+        }
+
+        private void OnProjectResourcesCreate_() => OnProjectResourcesCreate?.Invoke();
+        private void OnProjectResourcesAwake_() => OnProjectResourcesAwake?.Invoke();
+        private void OnProjectResourcesInitialized_() => OnProjectResourcesInitialized?.Invoke();
+        private void OnProjectResourcesStart_() => OnProjectResourcesStart?.Invoke();
+        
     }
 }

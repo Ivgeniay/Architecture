@@ -1,9 +1,4 @@
-﻿using Architecture.Root._Controller;
-using Architecture.Root._Scene;
-using Assets._Project.Scripts.Player;
-using FluffyUnderware.Curvy.Controllers;
-using Sirenix.Utilities;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,9 +9,9 @@ namespace Architecture.Root._Repository
         public event Action<object, LoadingEventType> OnRepositoryEvent;
 
         private Dictionary<Type, Repository> repositoriesPool;
-        private SceneSetting sceneSetting;
+        private InstallerSetting sceneSetting;
 
-        public RepositoriesPool(SceneSetting sceneSetting)
+        public RepositoriesPool(InstallerSetting sceneSetting)
         {
             repositoriesPool = new Dictionary<Type, Repository>();
             this.sceneSetting = sceneSetting;

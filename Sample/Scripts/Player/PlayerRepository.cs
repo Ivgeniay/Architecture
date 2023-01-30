@@ -22,16 +22,19 @@ namespace Assets._Project.Scripts.Player
         public override IEnumerator OnAwake()
         {
             yield return null;
+            Debug.Log("PlayerRepository OnAwake");
         }
 
         public override IEnumerator Initialize()
         {
             coins = PlayerPrefs.GetInt(KEY);
             yield return null;
+            Debug.Log("PlayerRepository OnInitialize");
         }
         public override IEnumerator OnStart()
         {
             yield return null;
+            Debug.Log("PlayerRepository OnStart");
         }
 
 
