@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Architecture.Root._Controller;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -51,7 +52,8 @@ namespace Architecture.Root._Repository
         public T GetRepository<T>() where T : Repository
         {
             var type = typeof(T);
-            return (T)repositoriesPool[type];
+            repositoriesPool.TryGetValue(type, out var repository);
+            return (T)repository;
         }
     }
 }

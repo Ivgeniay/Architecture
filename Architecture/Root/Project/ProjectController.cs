@@ -53,17 +53,9 @@ namespace Architecture.Root._Project
             
         }
 
-        public static T GetRepository<T>() where T : Repository
-        {
-            if (_projectInstaller = null) throw new Exception("Project installer in not set or initialized yet");
-            return _projectInstaller.GetRepository<T>();
-        }
-
-        public static T GetController<T>() where T : Controller
-        {
-            if (_projectInstaller = null) throw new Exception("Project installer in not set or initialized yet");
-            return _projectInstaller.GetController<T>();
-        }
+        public static T GetRepository<T>() where T : Repository => _projectInstaller.GetRepository<T>();
+        public static T GetController<T>() where T : Controller => _projectInstaller.GetController<T>();
+        
 
         private static void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
         private static void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);

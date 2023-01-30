@@ -176,19 +176,27 @@ internal class Game : MonoBehaviour
 
     public T GetRepository<T>() where T : Repository
     {
-        T repository = null;
+        T repository = ProjectController.GetRepository<T>();
+        if (repository is null) repository = sceneController.GetRepository<T>();
 
-        try { repository = ProjectController.GetRepository<T>(); }
-        catch { repository = sceneController.GetRepository<T>(); }
+        if (repository is null) {
+            var type = typeof(T);
+            throw new Exception($"There is no {type} repository");
+        }
+
         return repository;
     }
 
     public T GetController<T>() where T : Controller
     {
-        T controller = null;
+        T controller = ProjectController.GetController<T>();
+        if (controller is null) controller = sceneController.GetController<T>();
 
-        try { controller = ProjectController.GetController<T>(); }
-        catch { controller = sceneController.GetController<T>(); }
+        if (controller is null) {
+            var type = typeof(T);
+            throw new Exception($"There is no {type} controller");
+        }
+
         return controller;
     }
 

@@ -51,7 +51,8 @@ namespace Architecture.Root._Controller
         public T GetController<T>() where T : Controller
         {
             var type = typeof(T);
-            return (T) controllersPool[type];
+            controllersPool.TryGetValue(type, out var controller);
+            return (T) controller;
         }
     }
 }
