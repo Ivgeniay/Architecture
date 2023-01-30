@@ -13,6 +13,8 @@ namespace Assets._Project.Scripts.Sample.Scripts
         {
             var rr = Game.Instance.GetController<GameController>();
             rr.PublicMethod();
+            var pp = Game.Instance.GetController<PlayerController>();
+            Debug.Log($"Coins: {pp.GetNumCoins()}");
         }
 
     }
