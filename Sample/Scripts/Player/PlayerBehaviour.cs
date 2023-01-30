@@ -1,5 +1,4 @@
-﻿using Architecture.Root.GameController;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 internal class PlayerBehaviour : MonoBehaviour

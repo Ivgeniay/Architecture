@@ -6,25 +6,22 @@ internal class GameRepository : Repository
 {
     public override IEnumerator OnAwake()
     {
-        Debug.Log("GameRepository OnAwake");
-        return null;
+        yield return null;
     }
 
     public override IEnumerator Initialize()
     {
-        Debug.Log("GameRepository OnInit");
-        return null;
+        yield return null;
     }
 
     public override IEnumerator OnStart()
     {
-        Debug.Log("GameRepository OnStart");
-        return null;
+        yield return null;
     }
 
     public override IEnumerator Save()
     {
-        return null;
+        yield return null;
     }
     
 }

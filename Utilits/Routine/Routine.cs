@@ -4,11 +4,10 @@ using UnityEngine;
 
 public sealed class Routine : MonoBehaviour
 {
-    private static Routine _instance;
-    private static Routine instance {
+    private static Routine _instance = null;
+    public static Routine instance {
         get {
-            if (_instance == null)
-            {
+            if (_instance == null) {
                 var go = new GameObject("[COROUTINE]");
                 _instance = go.AddComponent<Routine>();
                 DontDestroyOnLoad(go);
@@ -20,8 +19,7 @@ public sealed class Routine : MonoBehaviour
     public static Coroutine StartRoutine(IEnumerator ienumerator) =>
         instance.StartCoroutine(ienumerator);
 
-    public static void StopRoutine(Coroutine coroutine)
-    {
+    public static void StopRoutine(Coroutine coroutine) =>
         instance.StopCoroutine(coroutine);
-    }
+    
 }

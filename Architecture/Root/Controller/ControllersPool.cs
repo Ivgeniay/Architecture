@@ -25,7 +25,7 @@ namespace Architecture.Root._Controller
 
             foreach(var contoller in controllersPool)
             {
-                yield return Routine.StartRoutine(contoller.Value.OnAwake());
+                yield return Routine.instance.StartCoroutine(contoller.Value.OnAwake());
                 OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Awake);
             }
         }
@@ -34,7 +34,7 @@ namespace Architecture.Root._Controller
 
             foreach (var contoller in controllersPool)
             {
-                yield return Routine.StartRoutine(contoller.Value.Initialize());
+                yield return Routine.instance.StartCoroutine(contoller.Value.Initialize());
                 OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Initialized);
             }
         }
@@ -43,7 +43,7 @@ namespace Architecture.Root._Controller
 
             foreach (var contoller in controllersPool)
             {
-                yield return Routine.StartRoutine(contoller.Value.OnStart());
+                yield return Routine.instance.StartCoroutine(contoller.Value.OnStart());
                 OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Start);
             }
         }

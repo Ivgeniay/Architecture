@@ -30,7 +30,7 @@ namespace Architecture.Root._Scene
 
 
 
-        public void InitCurrentScene() {
+        public IEnumerator InitCurrentScene() {
             currentScene = sceneInstallers.Where(el => el.SceneName == sceneName).First();
 
             currentScene.OnControllerEvent += OnControllerEvent_;
@@ -41,7 +41,7 @@ namespace Architecture.Root._Scene
             currentScene.OnInitialized += OnSceneInitialized_;
             currentScene.OnStart += OnSceneStart_;
 
-            currentScene.InitializeAsync();
+            yield return currentScene.InitializeAsync();
         }
 
 

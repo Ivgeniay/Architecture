@@ -1,6 +1,7 @@
 ﻿using Architecture.Root._Controller;
 using Architecture.Root._Repository;
 using System;
+using System.Collections;
 
 namespace Architecture.Root._Project
 {
@@ -18,11 +19,10 @@ namespace Architecture.Root._Project
 
         private static ProjectInstaller _projectInstaller = null;
 
-        public static void InitProjectController(ProjectInstaller projectInstaller)
+        public static IEnumerator InitProjectController(ProjectInstaller projectInstaller)
         {
             if (_projectInstaller != null)
-                return; 
-                //throw new Exception("Project resources were installed");
+                throw new Exception("Project resources were installed");
 
             if (projectInstaller == null)
                 throw new NullReferenceException();
@@ -37,7 +37,7 @@ namespace Architecture.Root._Project
             _projectInstaller.OnInitialized += OnProjectResourcesInitialized_;
             _projectInstaller.OnStart += OnProjectResourcesStart_;
             
-            _projectInstaller.InitializeAsync();
+            yield return _projectInstaller.InitializeAsync();
         }
 
 

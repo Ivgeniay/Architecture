@@ -20,7 +20,7 @@ namespace Architecture.Root
         public virtual event Action OnAwake;
         public virtual event Action OnInitialized;
         public virtual event Action OnStart;
-        public virtual void InitializeAsync() => this.StartCoroutine(Initialize());
+        public virtual IEnumerator InitializeAsync() { yield return Initialize(); }
         public virtual T GetRepository<T>() where T : Repository { return null; }
         public virtual T GetController<T>() where T : Controller { return null; }
         protected virtual IEnumerator Initialize() { return null; }

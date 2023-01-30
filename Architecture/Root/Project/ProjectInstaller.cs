@@ -26,12 +26,10 @@ namespace Architecture.Root._Project
             repositoriesPool.OnRepositoryEvent += OnRepositoryEvent_;
         }
 
-        public override void InitializeAsync() => this.StartCoroutine(Initialize());
-
+        public override IEnumerator InitializeAsync() { yield return Initialize(); }
         protected override IEnumerator Initialize()
         {
             yield return null;
-
             repositoriesPool.CreateRepositories();
             controllersPool.CreateControllers();
             OnResourcesCreate?.Invoke();

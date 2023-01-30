@@ -29,7 +29,7 @@ namespace Architecture.Root._Scene
             repositoriesPool.OnRepositoryEvent += OnRepositoryEvent_;
         }
 
-        public override void InitializeAsync() => this.StartCoroutine(Initialize());
+        public override IEnumerator InitializeAsync() { yield return Initialize(); }
 
         protected override IEnumerator Initialize()
         {

@@ -1,6 +1,4 @@
-﻿using Architecture.Root.GameController;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Architecture.Root.ArchBehaviour
@@ -46,12 +44,14 @@ namespace Architecture.Root.ArchBehaviour
             Game.Instance.OnProjectResourcesInitialized -= OnProjectResourcesInitializedEvent;
             Game.Instance.OnProjectResourcesStart -= OnProjectResourcesStartEvent;
 
-            Game.Instance.OnSceneAwake -= OnSceneAwake;
-            Game.Instance.OnSceneInitialized -= OnSceneInitialized;
-            Game.Instance.OnSceneStart -= OnSceneStart;
+            Game.Instance.OnSceneAwake -= OnSceneAwakeEvent;
+            Game.Instance.OnSceneInitialized -= OnSceneInitializedEvent;
+            Game.Instance.OnSceneStart -= OnSceneStartEvent;
 
             Game.Instance.OnControllerEvent -= OnControllerEvent;
             Game.Instance.OnRepositoryEvent -= OnRepositoryEvent;
+
+            SceneManager.activeSceneChanged -= OnActiveSceneChanged;
         }
 
         #region ProjectEvents
