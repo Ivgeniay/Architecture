@@ -1,7 +1,6 @@
 ﻿using Architecture.Root._Controller;
 using Architecture.Root._Repository;
 using Architecture.Root._Scene;
-using Assets._Project.Scripts.Player;
 using System;
 using System.Collections.Generic;
 

@@ -2,7 +2,7 @@
 using Architecture.Root._Repository;
 using System;
 
-namespace Architecture.Root.Project
+namespace Architecture.Root._Project
 {
     internal static class ProjectController
     {

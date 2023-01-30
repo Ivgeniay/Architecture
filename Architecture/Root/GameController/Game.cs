@@ -1,14 +1,12 @@
 ﻿using Architecture.Root._Controller;
 using Architecture.Root._Repository;
 using Architecture.Root._Scene;
-using Architecture.Root.Project;
+using Architecture.Root._Project;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Architecture.Root.GameController
 {

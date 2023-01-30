@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Architecture.Root.Project
+namespace Architecture.Root._Project
 {
     internal class ProjectInstaller : Installer
     {

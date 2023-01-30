@@ -9,16 +9,23 @@ namespace Architecture.Root.ArchBehaviour
     {
         private void OnEnable()
         {
-            Game.Instance.OnResourcesCreate += OnResourcesCreate_;
-            Game.Instance.OnSceneAwake += OnSceneAwake_;
-            Game.Instance.OnSceneInitialized += OnSceneInitialized_;
-            Game.Instance.OnSceneStart += OnSceneStart_;
+            Game.Instance.OnResourcesCreate += OnResourcesCreateEvent;
 
-            Game.Instance.OnControllerEvent += OnControllerEvent_;
-            Game.Instance.OnRepositoryEvent += OnRepositoryEvent_;
+            Game.Instance.OnProjectResourcesAwake += OnProjectResourcesAwakeEvent;
+            Game.Instance.OnProjectResourcesInitialized += OnProjectResourcesInitializedEvent;
+            Game.Instance.OnProjectResourcesStart += OnProjectResourcesStartEvent;
+
+            Game.Instance.OnSceneAwake += OnSceneAwakeEvent;
+            Game.Instance.OnSceneInitialized += OnSceneInitializedEvent;
+            Game.Instance.OnSceneStart += OnSceneStartEvent;
+
+            Game.Instance.OnControllerEvent += OnControllerEvent;
+            Game.Instance.OnRepositoryEvent += OnRepositoryEvent;
 
             SceneManager.activeSceneChanged += OnActiveSceneChanged;
         }
+
+        
 
         /// <summary>
         /// Mandatory using base 
@@ -30,47 +37,83 @@ namespace Architecture.Root.ArchBehaviour
             SceneManager.activeSceneChanged -= OnActiveSceneChanged;
         }
 
-        private void OnSceneStart_()
+        private void OnSceneStartEvent()
         {
             SendMessageUpwards("OnSceneStart", null, SendMessageOptions.DontRequireReceiver);
-            Game.Instance.OnResourcesCreate -= OnResourcesCreate;
+            Game.Instance.OnResourcesCreate -= OnResourcesCreateEvent;
+
+            Game.Instance.OnProjectResourcesAwake -= OnProjectResourcesAwakeEvent;
+            Game.Instance.OnProjectResourcesInitialized -= OnProjectResourcesInitializedEvent;
+            Game.Instance.OnProjectResourcesStart -= OnProjectResourcesStartEvent;
+
             Game.Instance.OnSceneAwake -= OnSceneAwake;
             Game.Instance.OnSceneInitialized -= OnSceneInitialized;
             Game.Instance.OnSceneStart -= OnSceneStart;
+
+            Game.Instance.OnControllerEvent -= OnControllerEvent;
+            Game.Instance.OnRepositoryEvent -= OnRepositoryEvent;
         }
-        private void OnSceneInitialized_() {
+
+        #region ProjectEvents
+        private void OnProjectResourcesCreateEvent() =>
+            SendMessageUpwards("OnProjectInitialized", null, SendMessageOptions.DontRequireReceiver);
+        private void OnProjectResourcesStartEvent() =>
+            SendMessageUpwards("OnProjectStart", null, SendMessageOptions.DontRequireReceiver);
+        private void OnProjectResourcesInitializedEvent() =>
+            SendMessageUpwards("OnProjectInitialized", null, SendMessageOptions.DontRequireReceiver);
+        private void OnProjectResourcesAwakeEvent() =>
+            SendMessageUpwards("OnProjectInitialized", null, SendMessageOptions.DontRequireReceiver);
+        #endregion
+
+        #region ScenesEvents
+        private void OnSceneInitializedEvent() =>
             SendMessageUpwards("OnSceneInitialized", null, SendMessageOptions.DontRequireReceiver);
-        }
-        private void OnSceneAwake_() {
+        private void OnSceneAwakeEvent() => 
             SendMessageUpwards("OnSceneAwake", null, SendMessageOptions.DontRequireReceiver);
-        }
-        private void OnResourcesCreate_() {
+        private void OnResourcesCreateEvent() => 
             SendMessageUpwards("OnResourcesCreate", null, SendMessageOptions.DontRequireReceiver);
-        }
+        #endregion
 
-        private void OnControllerEvent_(object arg1, LoadingEventType arg2) {
+        #region CommonEvents
+        private void OnControllerEvent(object arg1, LoadingEventType arg2) =>
             SendMessageUpwards("OnResourceEvent", new OnResourceEventArgs() { Resource = arg1, LoadingType = arg2 }, SendMessageOptions.DontRequireReceiver);
-        }
-
-        private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) { 
+        private void OnRepositoryEvent(object arg1, LoadingEventType arg2) => 
             SendMessageUpwards("OnResourceEvent", new OnResourceEventArgs() { Resource = arg1, LoadingType = arg2 }, SendMessageOptions.DontRequireReceiver);
-        }
+        #endregion
 
+        #region ProjectMono
         /// <summary>
-        /// An event that allows you to receive data that all controllers and repositories have been created, awaked, initialized, and started.
+        /// An event that allows you to receive data that all project's controllers and repositories have been created and awaked, but not yet initialized, and started.
+        /// </summary>
+        protected virtual void OnProjectAwake() { }
+        /// <summary>
+        /// An event that allows you to receive data that all project's controllers and repositories have been created, awaked and initialized, but not started
+        /// </summary>
+        protected virtual void OnProjectInitialized() { }
+        /// <summary>
+        /// An event that allows you to receive data that all project's controllers and repositories have been created, awaked, initialized, and started.
+        /// </summary>
+        protected virtual void OnProjectStart() { }
+        #endregion
+
+        #region ScenesMono
+        /// <summary>
+        /// An event that allows you to receive data that all scene's controllers and repositories have been created, awaked, initialized, and started.
         /// </summary>
         protected virtual void OnSceneStart() { }
 
         /// <summary>
-        /// An event that allows you to receive data that all controllers and repositories have been created, awaked and initialized, but not started
+        /// An event that allows you to receive data that all scene's controllers and repositories have been created, awaked and initialized, but not started
         /// </summary>
         protected virtual void OnSceneInitialized() { }
 
         /// <summary>
-        /// An event that allows you to receive data that all controllers and repositories have been created and awaked, but not yet initialized, and started.
+        /// An event that allows you to receive data that all scene's controllers and repositories have been created and awaked, but not yet initialized, and started.
         /// </summary>
         protected virtual void OnSceneAwake() { }
+        #endregion
 
+        #region CommonMono
         /// <summary>
         /// An event that allows you to receive data that all controllers and repositories have been created, but have not yet awaked, initialized, and started
         /// </summary>
@@ -81,6 +124,7 @@ namespace Architecture.Root.ArchBehaviour
         /// </summary>
         /// <param name="onResourceEventArgs">Resource == controller or repository, LoadingType == stage of loading was passed </param>
         protected virtual void OnResourceEvent(OnResourceEventArgs onResourceEventArgs) { }
+        #endregion
     }
 
     public class OnResourceEventArgs
