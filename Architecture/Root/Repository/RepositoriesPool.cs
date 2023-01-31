@@ -26,7 +26,8 @@ namespace Architecture.Root._Repository
         {
             foreach (var repository in repositoriesPool)
             {
-                yield return Routine.instance.StartCoroutine(repository.Value.OnAwake());
+                //yield return Routine.instance.StartCoroutine(repository.Value.OnAwake());
+                yield return repository.Value.OnAwake();
                 OnRepositoryEvent?.Invoke(repository.Value, LoadingEventType.Awake);
             }
         }
@@ -35,7 +36,7 @@ namespace Architecture.Root._Repository
         {
             foreach (var repository in repositoriesPool)
             {
-                yield return Routine.instance.StartCoroutine(repository.Value.Initialize());
+                yield return repository.Value.Initialize();
                 OnRepositoryEvent?.Invoke(repository.Value, LoadingEventType.Initialized);
             }
         }
@@ -44,8 +45,16 @@ namespace Architecture.Root._Repository
         {
             foreach (var repository in repositoriesPool)
             {
-                yield return Routine.instance.StartCoroutine(repository.Value.OnStart());
+                yield return repository.Value.OnStart();
                 OnRepositoryEvent?.Invoke(repository.Value, LoadingEventType.Start);
+            }
+        }
+
+        public void Frame()
+        {
+            if (repositoriesPool == null || repositoriesPool.Count == 0) return;
+            foreach(var repository in repositoriesPool) {
+                repository.Value.Frame();
             }
         }
 

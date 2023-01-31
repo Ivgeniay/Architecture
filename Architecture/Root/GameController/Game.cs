@@ -170,6 +170,11 @@ internal class Game : MonoBehaviour
 
     void Update()
     {
+        if(isLoaded) {
+            ProjectController.Frame();
+            sceneController.Frame();
+        }
+
         if (Input.GetKeyDown(KeyCode.RightArrow)) SceneManager.LoadScene("TestScene");
         if (Input.GetKeyDown(KeyCode.LeftArrow)) SceneManager.LoadScene("LoadScene");
     }

@@ -368,6 +368,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2064955060487553495, guid: 77f0adaf8cd00ca46a874c1f281937a7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064955060487553495, guid: 77f0adaf8cd00ca46a874c1f281937a7,
+        type: 3}
+      propertyPath: botUsername
+      value: huedrigalo
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064955060487553495, guid: 77f0adaf8cd00ca46a874c1f281937a7,
+        type: 3}
+      propertyPath: botOAuthToken
+      value: oauth:m7d0k9oid5tvo5cblr72oj2erfs0ai
+      objectReference: {fileID: 0}
+    - target: {fileID: 2064955060487553495, guid: 77f0adaf8cd00ca46a874c1f281937a7,
+        type: 3}
+      propertyPath: settings.useBot
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8561516364552299666, guid: 77f0adaf8cd00ca46a874c1f281937a7,
         type: 3}
       propertyPath: m_RootOrder
@@ -376,17 +396,17 @@ PrefabInstance:
     - target: {fileID: 8561516364552299666, guid: 77f0adaf8cd00ca46a874c1f281937a7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.195871
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8561516364552299666, guid: 77f0adaf8cd00ca46a874c1f281937a7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 17.112825
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8561516364552299666, guid: 77f0adaf8cd00ca46a874c1f281937a7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.417608
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8561516364552299666, guid: 77f0adaf8cd00ca46a874c1f281937a7,
         type: 3}

@@ -58,6 +58,94 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e8bc9214b074664a943b51fbcf773c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5630159427426153615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7682087488019574792}
+  - component: {fileID: 2064955060487553495}
+  - component: {fileID: 3788395602435099562}
+  m_Layer: 0
+  m_Name: TwitchManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7682087488019574792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630159427426153615}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8561516364552299666}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2064955060487553495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630159427426153615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 047f6561e453ddc4fb2930e6cf8a2844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  twitchChannelInfos:
+    chatters:
+      broadcaster: []
+      vips: []
+      moderators: []
+      staff: []
+      admins: []
+      global_mods: []
+      viewers: []
+  features: []
+  featureSet: {fileID: 0}
+  settings:
+    singleton: 0
+    verbose: 0
+    commandPrefix: 33
+    listCommand: 1
+    helpCommand: 1
+    helpMessage: 
+    builtinGui: 1
+    uIKeyCode: 293
+    showGUI: 0
+    autoConnect: 0
+    editorConstantRepaint: 0
+    useBot: 0
+  streamerProfilePic: {fileID: 0}
+  isDoneConnecting: 0
+  botUsername: 
+  botOAuthToken: 
+  testCase: {fileID: 0}
+  watchForViewers: 0
+  viewerWatcherCoroutineStarted: 0
+--- !u!114 &3788395602435099562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630159427426153615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cfc1ff2e229c9540b48d6cec45cf842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8561516363376012696
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,6 +328,7 @@ Transform:
   m_Children:
   - {fileID: 8561516364123269439}
   - {fileID: 415527936151140363}
+  - {fileID: 7682087488019574792}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

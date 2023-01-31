@@ -26,6 +26,7 @@ namespace Architecture.Root
         protected virtual IEnumerator Initialize() { return null; }
         private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
         private void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
+        public virtual void Frame() { }
 
     }
 }

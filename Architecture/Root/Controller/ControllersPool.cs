@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Architecture.Root._Repository;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -25,7 +26,7 @@ namespace Architecture.Root._Controller
 
             foreach(var contoller in controllersPool)
             {
-                yield return Routine.instance.StartCoroutine(contoller.Value.OnAwake());
+                yield return contoller.Value.OnAwake();
                 OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Awake);
             }
         }
@@ -34,7 +35,7 @@ namespace Architecture.Root._Controller
 
             foreach (var contoller in controllersPool)
             {
-                yield return Routine.instance.StartCoroutine(contoller.Value.Initialize());
+                yield return contoller.Value.Initialize();
                 OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Initialized);
             }
         }
@@ -43,8 +44,15 @@ namespace Architecture.Root._Controller
 
             foreach (var contoller in controllersPool)
             {
-                yield return Routine.instance.StartCoroutine(contoller.Value.OnStart());
+                yield return contoller.Value.OnStart();
                 OnControllerEvent?.Invoke(contoller.Value, LoadingEventType.Start);
+            }
+        }
+        public void Frame()
+        {
+            if (controllersPool == null || controllersPool.Count == 0) return;
+            foreach (var controller in controllersPool) {
+                controller.Value.Frame();
             }
         }
 

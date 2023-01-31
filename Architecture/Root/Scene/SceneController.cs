@@ -60,6 +60,10 @@ namespace Architecture.Root._Scene
             return currentScene.GetController<T>();
         }
 
+        public void Frame() =>
+            currentScene.Frame();
+        
+
         private void Unsubscribe()
         {
             currentScene.OnControllerEvent -= OnControllerEvent_;

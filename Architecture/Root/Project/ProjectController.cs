@@ -53,6 +53,9 @@ namespace Architecture.Root._Project
             
         }
 
+        public static void Frame() =>
+            _projectInstaller.Frame();
+        
         public static T GetRepository<T>() where T : Repository => _projectInstaller.GetRepository<T>();
         public static T GetController<T>() where T : Controller => _projectInstaller.GetController<T>();
         

@@ -53,6 +53,10 @@ namespace Architecture.Root._Scene
 
         }
 
+        public override void Frame() {
+            repositoriesPool.Frame();
+            controllersPool.Frame();
+        }
         public override T GetRepository<T>() => repositoriesPool.GetRepository<T>();
         public override T GetController<T>() => controllersPool.GetController<T>();
         private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
