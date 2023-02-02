@@ -8,7 +8,7 @@ internal class PlayerBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        Game.Instance.OnSceneStart += OnSceneStart;
+        Game.Instance.OnSceneStartEvent += OnSceneStart;
     }
 
     private void OnSceneStart()

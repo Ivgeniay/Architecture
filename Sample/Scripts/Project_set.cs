@@ -3,6 +3,9 @@ using Architecture.Root._Repository;
 using Architecture.Root._Project;
 using System;
 using System.Collections.Generic;
+using NetWork.Twitch._Client;
+using NetWork.Twitch._Auth;
+using NetWork.Twitch._PubSub;
 
 namespace Assets._Project.Scripts
 {
