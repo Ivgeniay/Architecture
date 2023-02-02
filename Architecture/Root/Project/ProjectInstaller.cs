@@ -11,7 +11,6 @@ namespace Architecture.Root._Project
         public override event Action<object, LoadingEventType> OnControllerEvent;
         public override event Action<object, LoadingEventType> OnRepositoryEvent;
 
-        public override event Action OnResourcesCreateEvent;
         public override event Action OnAwakeEvent;
         public override event Action OnInitializedEvent;
         public override event Action OnStartEvent;
@@ -32,7 +31,6 @@ namespace Architecture.Root._Project
             yield return null;
             repositoriesPool.CreateRepositories();
             controllersPool.CreateControllers();
-            OnResourcesCreateEvent?.Invoke();
 
             yield return repositoriesPool.OnAwakeRepositories();
             yield return controllersPool.OnAwakeControllers();

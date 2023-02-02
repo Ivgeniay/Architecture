@@ -14,7 +14,6 @@ namespace Architecture.Root._Scene
         public event Action<object, LoadingEventType> OnControllerEvent;
         public event Action<object, LoadingEventType> OnRepositoryEvent;
 
-        public event Action OnResourcesCreateEvent;
         public event Action OnSceneAwakeEvent;
         public event Action OnSceneInitializedEvent;
         public event Action OnSceneStartEvent;
@@ -36,7 +35,6 @@ namespace Architecture.Root._Scene
             currentScene.OnControllerEvent += OnControllerEventHandler;
             currentScene.OnRepositoryEvent += OnRepositoryEventHandler;
 
-            currentScene.OnResourcesCreateEvent += OnResourcesCreateHandler;
             currentScene.OnAwakeEvent += OnSceneAwakeHandler;
             currentScene.OnInitializedEvent += OnSceneInitializedHandler;
             currentScene.OnStartEvent += OnSceneStartHandler;
@@ -69,14 +67,12 @@ namespace Architecture.Root._Scene
             currentScene.OnControllerEvent -= OnControllerEventHandler;
             currentScene.OnRepositoryEvent -= OnRepositoryEventHandler;
 
-            currentScene.OnResourcesCreateEvent -= OnResourcesCreateHandler;
             currentScene.OnAwakeEvent -= OnSceneAwakeHandler;
             currentScene.OnInitializedEvent -= OnSceneInitializedHandler;
             currentScene.OnStartEvent -= OnSceneStartHandler;
         }
         private void OnControllerEventHandler(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
         private void OnRepositoryEventHandler(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
-        private void OnResourcesCreateHandler() => OnResourcesCreateEvent?.Invoke();
         private void OnSceneAwakeHandler() => OnSceneAwakeEvent?.Invoke();
         private void OnSceneInitializedHandler() => OnSceneInitializedEvent?.Invoke();
         private void OnSceneStartHandler() {

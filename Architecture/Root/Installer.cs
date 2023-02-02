@@ -16,7 +16,6 @@ namespace Architecture.Root
         public virtual event Action<object, LoadingEventType> OnControllerEvent;
         public virtual event Action<object, LoadingEventType> OnRepositoryEvent;
 
-        public virtual event Action OnResourcesCreateEvent;
         public virtual event Action OnAwakeEvent;
         public virtual event Action OnInitializedEvent;
         public virtual event Action OnStartEvent;

@@ -12,7 +12,6 @@ namespace Architecture.Root._Project
         public static event Action<object, LoadingEventType> OnControllerEvent;
         public static event Action<object, LoadingEventType> OnRepositoryEvent;
 
-        public static event Action OnProjectResourcesCreateEvent;
         public static event Action OnProjectResourcesAwakeEvent;
         public static event Action OnProjectResourcesInitializedEvent;
         public static event Action OnProjectResourcesStartEvent;
@@ -32,7 +31,6 @@ namespace Architecture.Root._Project
             _projectInstaller.OnControllerEvent += OnControllerEventHandler;
             _projectInstaller.OnRepositoryEvent += OnRepositoryEventHandler;
 
-            _projectInstaller.OnResourcesCreateEvent += OnProjectResourcesCreateHandler;
             _projectInstaller.OnAwakeEvent += OnProjectResourcesAwakeHandler;
             _projectInstaller.OnInitializedEvent += OnProjectResourcesInitializedHandler;
             _projectInstaller.OnStartEvent += OnProjectResourcesStartHandler;
@@ -46,7 +44,6 @@ namespace Architecture.Root._Project
             projectInstaller.OnControllerEvent -= OnControllerEventHandler;
             projectInstaller.OnRepositoryEvent -= OnRepositoryEventHandler;
 
-            projectInstaller.OnResourcesCreateEvent -= OnProjectResourcesCreateHandler;
             projectInstaller.OnAwakeEvent -= OnProjectResourcesAwakeHandler;
             projectInstaller.OnInitializedEvent -= OnProjectResourcesInitializedHandler;
             projectInstaller.OnStartEvent -= OnProjectResourcesStartHandler;
@@ -62,7 +59,6 @@ namespace Architecture.Root._Project
 
         private static void OnControllerEventHandler(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
         private static void OnRepositoryEventHandler(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
-        private static void OnProjectResourcesCreateHandler() => OnProjectResourcesCreateEvent?.Invoke();
         private static void OnProjectResourcesAwakeHandler() => OnProjectResourcesAwakeEvent?.Invoke();
         private static void OnProjectResourcesInitializedHandler() => OnProjectResourcesInitializedEvent?.Invoke();
         private static void OnProjectResourcesStartHandler() {
