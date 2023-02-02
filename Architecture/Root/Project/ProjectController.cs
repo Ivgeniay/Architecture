@@ -12,10 +12,10 @@ namespace Architecture.Root._Project
         public static event Action<object, LoadingEventType> OnControllerEvent;
         public static event Action<object, LoadingEventType> OnRepositoryEvent;
 
-        public static event Action OnProjectResourcesCreate;
-        public static event Action OnProjectResourcesAwake;
-        public static event Action OnProjectResourcesInitialized;
-        public static event Action OnProjectResourcesStart;
+        public static event Action OnProjectResourcesCreateEvent;
+        public static event Action OnProjectResourcesAwakeEvent;
+        public static event Action OnProjectResourcesInitializedEvent;
+        public static event Action OnProjectResourcesStartEvent;
 
         private static ProjectInstaller _projectInstaller = null;
 
@@ -29,13 +29,13 @@ namespace Architecture.Root._Project
 
             _projectInstaller = projectInstaller;
 
-            _projectInstaller.OnControllerEvent += OnControllerEvent_;
-            _projectInstaller.OnRepositoryEvent += OnRepositoryEvent_;
+            _projectInstaller.OnControllerEvent += OnControllerEventHandler;
+            _projectInstaller.OnRepositoryEvent += OnRepositoryEventHandler;
 
-            _projectInstaller.OnResourcesCreate += OnProjectResourcesCreate_;
-            _projectInstaller.OnAwake += OnProjectResourcesAwake_;
-            _projectInstaller.OnInitialized += OnProjectResourcesInitialized_;
-            _projectInstaller.OnStart += OnProjectResourcesStart_;
+            _projectInstaller.OnResourcesCreateEvent += OnProjectResourcesCreateHandler;
+            _projectInstaller.OnAwakeEvent += OnProjectResourcesAwakeHandler;
+            _projectInstaller.OnInitializedEvent += OnProjectResourcesInitializedHandler;
+            _projectInstaller.OnStartEvent += OnProjectResourcesStartHandler;
             
             yield return _projectInstaller.InitializeAsync();
         }
@@ -43,13 +43,13 @@ namespace Architecture.Root._Project
 
         private static void Unsubscribe(ProjectInstaller projectInstaller)
         {
-            projectInstaller.OnControllerEvent -= OnControllerEvent_;
-            projectInstaller.OnRepositoryEvent -= OnRepositoryEvent_;
+            projectInstaller.OnControllerEvent -= OnControllerEventHandler;
+            projectInstaller.OnRepositoryEvent -= OnRepositoryEventHandler;
 
-            projectInstaller.OnResourcesCreate -= OnProjectResourcesCreate_;
-            projectInstaller.OnAwake -= OnProjectResourcesAwake_;
-            projectInstaller.OnInitialized -= OnProjectResourcesInitialized_;
-            projectInstaller.OnStart -= OnProjectResourcesStart_;
+            projectInstaller.OnResourcesCreateEvent -= OnProjectResourcesCreateHandler;
+            projectInstaller.OnAwakeEvent -= OnProjectResourcesAwakeHandler;
+            projectInstaller.OnInitializedEvent -= OnProjectResourcesInitializedHandler;
+            projectInstaller.OnStartEvent -= OnProjectResourcesStartHandler;
             
         }
 
@@ -60,14 +60,14 @@ namespace Architecture.Root._Project
         public static T GetController<T>() where T : Controller => _projectInstaller.GetController<T>();
         
 
-        private static void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
-        private static void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
-        private static void OnProjectResourcesCreate_() => OnProjectResourcesCreate?.Invoke();
-        private static void OnProjectResourcesAwake_() => OnProjectResourcesAwake?.Invoke();
-        private static void OnProjectResourcesInitialized_() => OnProjectResourcesInitialized?.Invoke();
-        private static void OnProjectResourcesStart_() {
+        private static void OnControllerEventHandler(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
+        private static void OnRepositoryEventHandler(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
+        private static void OnProjectResourcesCreateHandler() => OnProjectResourcesCreateEvent?.Invoke();
+        private static void OnProjectResourcesAwakeHandler() => OnProjectResourcesAwakeEvent?.Invoke();
+        private static void OnProjectResourcesInitializedHandler() => OnProjectResourcesInitializedEvent?.Invoke();
+        private static void OnProjectResourcesStartHandler() {
             isLoaded = true;
-            OnProjectResourcesStart?.Invoke();
+            OnProjectResourcesStartEvent?.Invoke();
             Unsubscribe(_projectInstaller);
         }
     }

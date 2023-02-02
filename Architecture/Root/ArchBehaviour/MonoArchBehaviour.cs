@@ -7,15 +7,15 @@ namespace Architecture.Root.ArchBehaviour
     {
         private void OnEnable()
         {
-            Game.Instance.OnResourcesCreate += OnResourcesCreateEvent;
+            Game.Instance.OnResourcesCreateEvent += OnResourcesCreateEvent;
 
-            Game.Instance.OnProjectResourcesAwake += OnProjectResourcesAwakeEvent;
-            Game.Instance.OnProjectResourcesInitialized += OnProjectResourcesInitializedEvent;
-            Game.Instance.OnProjectResourcesStart += OnProjectResourcesStartEvent;
+            Game.Instance.OnProjectResourcesAwakeEvent += OnProjectResourcesAwakeEvent;
+            Game.Instance.OnProjectResourcesInitializedEvent += OnProjectResourcesInitializedEvent;
+            Game.Instance.OnProjectResourcesStartEvent += OnProjectResourcesStartEvent;
 
-            Game.Instance.OnSceneAwake += OnSceneAwakeEvent;
-            Game.Instance.OnSceneInitialized += OnSceneInitializedEvent;
-            Game.Instance.OnSceneStart += OnSceneStartEvent;
+            Game.Instance.OnSceneAwakeEvent += OnSceneAwakeEvent;
+            Game.Instance.OnSceneInitializedEvent += OnSceneInitializedEvent;
+            Game.Instance.OnSceneStartEvent += OnSceneStartEvent;
 
             Game.Instance.OnControllerEvent += OnControllerEvent;
             Game.Instance.OnRepositoryEvent += OnRepositoryEvent;
@@ -37,16 +37,16 @@ namespace Architecture.Root.ArchBehaviour
 
         private void OnSceneStartEvent()
         {
-            SendMessageUpwards("OnSceneStart", null, SendMessageOptions.DontRequireReceiver);
-            Game.Instance.OnResourcesCreate -= OnResourcesCreateEvent;
+            SendMessageUpwards("OnSceneStartEvent", null, SendMessageOptions.DontRequireReceiver);
+            Game.Instance.OnResourcesCreateEvent -= OnResourcesCreateEvent;
 
-            Game.Instance.OnProjectResourcesAwake -= OnProjectResourcesAwakeEvent;
-            Game.Instance.OnProjectResourcesInitialized -= OnProjectResourcesInitializedEvent;
-            Game.Instance.OnProjectResourcesStart -= OnProjectResourcesStartEvent;
+            Game.Instance.OnProjectResourcesAwakeEvent -= OnProjectResourcesAwakeEvent;
+            Game.Instance.OnProjectResourcesInitializedEvent -= OnProjectResourcesInitializedEvent;
+            Game.Instance.OnProjectResourcesStartEvent -= OnProjectResourcesStartEvent;
 
-            Game.Instance.OnSceneAwake -= OnSceneAwakeEvent;
-            Game.Instance.OnSceneInitialized -= OnSceneInitializedEvent;
-            Game.Instance.OnSceneStart -= OnSceneStartEvent;
+            Game.Instance.OnSceneAwakeEvent -= OnSceneAwakeEvent;
+            Game.Instance.OnSceneInitializedEvent -= OnSceneInitializedEvent;
+            Game.Instance.OnSceneStartEvent -= OnSceneStartEvent;
 
             Game.Instance.OnControllerEvent -= OnControllerEvent;
             Game.Instance.OnRepositoryEvent -= OnRepositoryEvent;
@@ -67,11 +67,11 @@ namespace Architecture.Root.ArchBehaviour
 
         #region ScenesEvents
         private void OnSceneInitializedEvent() =>
-            SendMessageUpwards("OnSceneInitialized", null, SendMessageOptions.DontRequireReceiver);
+            SendMessageUpwards("OnSceneInitializedEvent", null, SendMessageOptions.DontRequireReceiver);
         private void OnSceneAwakeEvent() => 
-            SendMessageUpwards("OnSceneAwake", null, SendMessageOptions.DontRequireReceiver);
+            SendMessageUpwards("OnSceneAwakeEvent", null, SendMessageOptions.DontRequireReceiver);
         private void OnResourcesCreateEvent() => 
-            SendMessageUpwards("OnResourcesCreate", null, SendMessageOptions.DontRequireReceiver);
+            SendMessageUpwards("OnResourcesCreateEvent", null, SendMessageOptions.DontRequireReceiver);
         #endregion
 
         #region CommonEvents

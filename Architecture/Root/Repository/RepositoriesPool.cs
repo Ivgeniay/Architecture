@@ -26,7 +26,7 @@ namespace Architecture.Root._Repository
         {
             foreach (var repository in repositoriesPool)
             {
-                //yield return Routine.instance.StartCoroutine(repository.Value.OnAwake());
+                //yield return Routine.Instance.StartCoroutine(repository.Value.OnAwakeEvent());
                 yield return repository.Value.OnAwake();
                 OnRepositoryEvent?.Invoke(repository.Value, LoadingEventType.Awake);
             }

@@ -16,10 +16,10 @@ namespace Architecture.Root
         public virtual event Action<object, LoadingEventType> OnControllerEvent;
         public virtual event Action<object, LoadingEventType> OnRepositoryEvent;
 
-        public virtual event Action OnResourcesCreate;
-        public virtual event Action OnAwake;
-        public virtual event Action OnInitialized;
-        public virtual event Action OnStart;
+        public virtual event Action OnResourcesCreateEvent;
+        public virtual event Action OnAwakeEvent;
+        public virtual event Action OnInitializedEvent;
+        public virtual event Action OnStartEvent;
         public virtual IEnumerator InitializeAsync() { yield return Initialize(); }
         public virtual T GetRepository<T>() where T : Repository { return null; }
         public virtual T GetController<T>() where T : Controller { return null; }

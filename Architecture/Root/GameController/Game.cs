@@ -40,36 +40,36 @@ internal class Game : MonoBehaviour
     /// <summary>
     /// An event that allows you to receive data that all controllers and repositories have been created, but have not yet awaked, initialized, and started in the project
     /// </summary>
-    public event Action OnProjectResourcesCreate;
+    public event Action OnProjectResourcesCreateEvent;
     /// <summary>
     /// An event that allows you to receive data that all controllers and repositories have been created and awaked, but not yet initialized, and started in the project
     /// </summary>
-    public event Action OnProjectResourcesAwake;
+    public event Action OnProjectResourcesAwakeEvent;
     /// <summary>
     /// An event that allows you to receive data that all controllers and repositories have been created, awaked and initialized, but not started in the project
     /// </summary>
-    public event Action OnProjectResourcesInitialized;
+    public event Action OnProjectResourcesInitializedEvent;
     /// <summary>
     /// An event that allows you to receive data that all controllers and repositories have been created, awaked, initialized, and started in the project
     /// </summary>
-    public event Action OnProjectResourcesStart;
+    public event Action OnProjectResourcesStartEvent;
 
     /// <summary>
     /// An event that allows you to receive data that all controllers and repositories have been created, but have not yet awaked, initialized, and started in the scene
     /// </summary>
-    public event Action OnResourcesCreate;
+    public event Action OnResourcesCreateEvent;
     /// <summary>
     /// An event that allows you to receive data that all controllers and repositories have been created and awaked, but not yet initialized, and started in the scene
     /// </summary>
-    public event Action OnSceneAwake;
+    public event Action OnSceneAwakeEvent;
     /// <summary>
     /// An event that allows you to receive data that all controllers and repositories have been created, awaked and initialized, but not started in the scene
     /// </summary>
-    public event Action OnSceneInitialized;
+    public event Action OnSceneInitializedEvent;
     /// <summary>
     /// An event that allows you to receive data that all controllers and repositories have been created, awaked, initialized, and started in the scene
     /// </summary>
-    public event Action OnSceneStart;
+    public event Action OnSceneStartEvent;
 
     private List<SceneInstaller> scenes = new List<SceneInstaller>();
     private SceneController sceneController;
@@ -81,7 +81,7 @@ internal class Game : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this);
 
-            SceneManager.activeSceneChanged += OnActiveSceneChanged;
+            SceneManager.activeSceneChanged += OnActiveSceneChangedHandler;
             return;
         }
         Destroy(gameObject);
@@ -96,14 +96,14 @@ internal class Game : MonoBehaviour
     {
         if (ProjectController.isLoaded == false)
         {
-            ProjectController.OnProjectResourcesCreate += OnProjectResourcesCreate_;
+            ProjectController.OnProjectResourcesCreateEvent += OnProjectResourcesCreateHandler;
 
-            ProjectController.OnProjectResourcesAwake += OnProjectResourcesAwake_;
-            ProjectController.OnProjectResourcesInitialized += OnProjectResourcesInitialized_;
-            ProjectController.OnProjectResourcesStart += OnProjectResourcesStart_;
+            ProjectController.OnProjectResourcesAwakeEvent += OnProjectResourcesAwakeHandler;
+            ProjectController.OnProjectResourcesInitializedEvent += OnProjectResourcesInitializedHandler;
+            ProjectController.OnProjectResourcesStartEvent += OnProjectResourcesStartHandler;
 
-            ProjectController.OnControllerEvent += OnControllerEvent_;
-            ProjectController.OnRepositoryEvent += OnRepositoryEvent_;
+            ProjectController.OnControllerEvent += OnControllerEventHandler;
+            ProjectController.OnRepositoryEvent += OnRepositoryEventHandler;
 
 
             var projectInstaller = Instance.transform.GetComponentInChildren<ProjectInstaller>(true);
@@ -113,10 +113,10 @@ internal class Game : MonoBehaviour
         }
         else
         {
-            OnProjectResourcesCreate_();
-            OnProjectResourcesAwake_();
-            OnProjectResourcesInitialized_();
-            OnProjectResourcesStart_();
+            OnProjectResourcesCreateHandler();
+            OnProjectResourcesAwakeHandler();
+            OnProjectResourcesInitializedHandler();
+            OnProjectResourcesStartHandler();
         }
         yield return null;
     }
@@ -128,13 +128,13 @@ internal class Game : MonoBehaviour
         {
             sceneController = new SceneController(scenes);
 
-            sceneController.OnControllerEvent += OnControllerEvent_;
-            sceneController.OnRepositoryEvent += OnRepositoryEvent_;
+            sceneController.OnControllerEvent += OnControllerEventHandler;
+            sceneController.OnRepositoryEvent += OnRepositoryEventHandler;
 
-            sceneController.OnResourcesCreate += OnResourcesCreate_;
-            sceneController.OnSceneAwake += OnSceneAwake_;
-            sceneController.OnSceneInitialized += OnSceneInitialized_;
-            sceneController.OnSceneStart += OnSceneStart_;
+            sceneController.OnResourcesCreateEvent += OnResourcesCreate_;
+            sceneController.OnSceneAwakeEvent += OnSceneAwake_;
+            sceneController.OnSceneInitializedEvent += OnSceneInitialized_;
+            sceneController.OnSceneStartEvent += OnSceneStart_;
 
             yield return sceneController.InitCurrentScene();
         }
@@ -148,23 +148,23 @@ internal class Game : MonoBehaviour
     }
     private void UnsubscribeScene()
     {
-        sceneController.OnControllerEvent -= OnControllerEvent_;
-        sceneController.OnRepositoryEvent -= OnRepositoryEvent_;
+        sceneController.OnControllerEvent -= OnControllerEventHandler;
+        sceneController.OnRepositoryEvent -= OnRepositoryEventHandler;
 
-        sceneController.OnResourcesCreate -= OnResourcesCreate_;
-        sceneController.OnSceneAwake -= OnSceneAwake_;
-        sceneController.OnSceneInitialized -= OnSceneInitialized_;
-        sceneController.OnSceneStart -= OnSceneStart_;
+        sceneController.OnResourcesCreateEvent -= OnResourcesCreate_;
+        sceneController.OnSceneAwakeEvent -= OnSceneAwake_;
+        sceneController.OnSceneInitializedEvent -= OnSceneInitialized_;
+        sceneController.OnSceneStartEvent -= OnSceneStart_;
     }
     private void UnsubscribeProject()
     {
-        ProjectController.OnProjectResourcesCreate -= OnProjectResourcesCreate_;
-        ProjectController.OnProjectResourcesAwake -= OnProjectResourcesAwake_;
-        ProjectController.OnProjectResourcesInitialized -= OnProjectResourcesInitialized_;
-        ProjectController.OnProjectResourcesStart -= OnProjectResourcesStart_;
+        ProjectController.OnProjectResourcesCreateEvent -= OnProjectResourcesCreateHandler;
+        ProjectController.OnProjectResourcesAwakeEvent -= OnProjectResourcesAwakeHandler;
+        ProjectController.OnProjectResourcesInitializedEvent -= OnProjectResourcesInitializedHandler;
+        ProjectController.OnProjectResourcesStartEvent -= OnProjectResourcesStartHandler;
 
-        ProjectController.OnControllerEvent -= OnControllerEvent_;
-        ProjectController.OnRepositoryEvent -= OnRepositoryEvent_;
+        ProjectController.OnControllerEvent -= OnControllerEventHandler;
+        ProjectController.OnRepositoryEvent -= OnRepositoryEventHandler;
     }
 
 
@@ -209,21 +209,21 @@ internal class Game : MonoBehaviour
     {
         sceneController.ExitCurrentScene();
     }
-    private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
-    private void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
-    private void OnResourcesCreate_() => OnResourcesCreate?.Invoke();
-    private void OnActiveSceneChanged(Scene arg0, Scene arg1) => Routine.instance.StartCoroutine(GameInitialize());
-    private void OnSceneAwake_() => OnSceneAwake?.Invoke();
-    private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
+    private void OnRepositoryEventHandler(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
+    private void OnControllerEventHandler(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
+    private void OnResourcesCreate_() => OnResourcesCreateEvent?.Invoke();
+    private void OnActiveSceneChangedHandler(Scene arg0, Scene arg1) => Routine.Instance.StartCoroutine(GameInitialize());
+    private void OnSceneAwake_() => OnSceneAwakeEvent?.Invoke();
+    private void OnSceneInitialized_() => OnSceneInitializedEvent?.Invoke();
     private void OnSceneStart_() {
         isLoaded = true;
-        OnSceneStart?.Invoke();
+        OnSceneStartEvent?.Invoke();
     }
 
-    private void OnProjectResourcesCreate_() => OnProjectResourcesCreate?.Invoke();
-    private void OnProjectResourcesAwake_() => OnProjectResourcesAwake?.Invoke();
-    private void OnProjectResourcesInitialized_() => OnProjectResourcesInitialized?.Invoke();
-    private void OnProjectResourcesStart_() => OnProjectResourcesStart?.Invoke();
+    private void OnProjectResourcesCreateHandler() => OnProjectResourcesCreateEvent?.Invoke();
+    private void OnProjectResourcesAwakeHandler() => OnProjectResourcesAwakeEvent?.Invoke();
+    private void OnProjectResourcesInitializedHandler() => OnProjectResourcesInitializedEvent?.Invoke();
+    private void OnProjectResourcesStartHandler() => OnProjectResourcesStartEvent?.Invoke();
         
 }
 

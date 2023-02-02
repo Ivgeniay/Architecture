@@ -14,10 +14,10 @@ namespace Architecture.Root._Scene
         public event Action<object, LoadingEventType> OnControllerEvent;
         public event Action<object, LoadingEventType> OnRepositoryEvent;
 
-        public event Action OnResourcesCreate;
-        public event Action OnSceneAwake;
-        public event Action OnSceneInitialized;
-        public event Action OnSceneStart;
+        public event Action OnResourcesCreateEvent;
+        public event Action OnSceneAwakeEvent;
+        public event Action OnSceneInitializedEvent;
+        public event Action OnSceneStartEvent;
 
         private List<SceneInstaller> sceneInstallers;
 
@@ -33,13 +33,13 @@ namespace Architecture.Root._Scene
         public IEnumerator InitCurrentScene() {
             currentScene = sceneInstallers.Where(el => el.SceneName == sceneName).First();
 
-            currentScene.OnControllerEvent += OnControllerEvent_;
-            currentScene.OnRepositoryEvent += OnRepositoryEvent_;
+            currentScene.OnControllerEvent += OnControllerEventHandler;
+            currentScene.OnRepositoryEvent += OnRepositoryEventHandler;
 
-            currentScene.OnResourcesCreate += OnResourcesCreate_;
-            currentScene.OnAwake += OnSceneAwake_;
-            currentScene.OnInitialized += OnSceneInitialized_;
-            currentScene.OnStart += OnSceneStart_;
+            currentScene.OnResourcesCreateEvent += OnResourcesCreateHandler;
+            currentScene.OnAwakeEvent += OnSceneAwakeHandler;
+            currentScene.OnInitializedEvent += OnSceneInitializedHandler;
+            currentScene.OnStartEvent += OnSceneStartHandler;
 
             yield return currentScene.InitializeAsync();
         }
@@ -66,21 +66,21 @@ namespace Architecture.Root._Scene
 
         private void Unsubscribe()
         {
-            currentScene.OnControllerEvent -= OnControllerEvent_;
-            currentScene.OnRepositoryEvent -= OnRepositoryEvent_;
+            currentScene.OnControllerEvent -= OnControllerEventHandler;
+            currentScene.OnRepositoryEvent -= OnRepositoryEventHandler;
 
-            currentScene.OnResourcesCreate -= OnResourcesCreate_;
-            currentScene.OnAwake -= OnSceneAwake_;
-            currentScene.OnInitialized -= OnSceneInitialized_;
-            currentScene.OnStart -= OnSceneStart_;
+            currentScene.OnResourcesCreateEvent -= OnResourcesCreateHandler;
+            currentScene.OnAwakeEvent -= OnSceneAwakeHandler;
+            currentScene.OnInitializedEvent -= OnSceneInitializedHandler;
+            currentScene.OnStartEvent -= OnSceneStartHandler;
         }
-        private void OnControllerEvent_(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
-        private void OnRepositoryEvent_(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
-        private void OnResourcesCreate_() => OnResourcesCreate?.Invoke();
-        private void OnSceneAwake_() => OnSceneAwake?.Invoke();
-        private void OnSceneInitialized_() => OnSceneInitialized?.Invoke();
-        private void OnSceneStart_() {
-            OnSceneStart?.Invoke();
+        private void OnControllerEventHandler(object arg1, LoadingEventType arg2) => OnControllerEvent?.Invoke(arg1, arg2);
+        private void OnRepositoryEventHandler(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);
+        private void OnResourcesCreateHandler() => OnResourcesCreateEvent?.Invoke();
+        private void OnSceneAwakeHandler() => OnSceneAwakeEvent?.Invoke();
+        private void OnSceneInitializedHandler() => OnSceneInitializedEvent?.Invoke();
+        private void OnSceneStartHandler() {
+            OnSceneStartEvent?.Invoke();
             Unsubscribe();
         }
     }
