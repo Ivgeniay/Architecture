@@ -14,7 +14,7 @@ namespace Architecture.Pools.ObjectsPool
         {
             this.instance = instance;
             if (container == null) {
-                var go = new GameObject($"POOLOF:{instance}");
+                var go = new GameObject($"PoolOf:{instance}");
                 this.container = go.transform;
             }
             this.isAutoExpandable = isAutoExpandable;
@@ -33,6 +33,9 @@ namespace Architecture.Pools.ObjectsPool
         }
 
         public T CreateObject(Transform container = null, bool isActiveOnInstantiate = false) {
+            if (container == null) 
+                container = this.container;
+            
             var go = Object.Instantiate(instance, container);
             go.gameObject.SetActive(isActiveOnInstantiate);
             pool.AddObject(go);
