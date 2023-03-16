@@ -480,6 +480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca77917d45fa06444ac4b79bfc0922a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadSceneName: LoadScene
+  testSceneName: TestScene
 --- !u!4 &1956959232
 Transform:
   m_ObjectHideFlags: 0

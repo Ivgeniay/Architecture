@@ -1,14 +1,17 @@
 ﻿using Architecture.Root.ArchBehaviour;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-namespace Assets._Project.Scripts.Sample.Scripts
+namespace Scripts.Sample.Scripts
 {
     internal class SampleArchMonobehaviour : MonoArchBehaviour
     {
+        [SerializeField] private string loadSceneName;
+        [SerializeField] private string testSceneName;
 
         protected override void OnResourceEvent(OnResourceEventArgs onResourceEventArgs)
         {
-            Debug.Log(onResourceEventArgs.Resource.ToString() + onResourceEventArgs.LoadingType);
+            //Debug.Log(onResourceEventArgs.Resource.ToString() + onResourceEventArgs.LoadingType);
         }
 
         protected override void OnSceneStart()
@@ -21,11 +24,11 @@ namespace Assets._Project.Scripts.Sample.Scripts
         {
             if (Game.Instance.isLoaded) 
             {
-                if (Input.GetKeyDown(KeyCode.Space)) 
-                {
-                    
+                if (Input.GetKeyDown(KeyCode.RightArrow)) {
+                    SceneManager.LoadScene(testSceneName);
                 }                
-                if (Input.GetKeyDown(KeyCode.A)){
+                if (Input.GetKeyDown(KeyCode.LeftArrow)){
+                    SceneManager.LoadScene(loadSceneName);
                     
                 }
             }
