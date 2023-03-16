@@ -2,7 +2,7 @@
 using Architecture.DI.Descriptors;
 using System;
 
-namespace Architecture.DI.Container.Extensions
+namespace Architecture.DI.Containers.Extensions
 {
     internal static class ContainerBuilderExtensions
     {

@@ -1,9 +1,19 @@
-﻿namespace Architecture.DI.Containers
+﻿using Architecture.DI.Descriptors;
+using System.Collections.Generic;
+
+namespace Architecture.DI.Containers
 {
     internal class ContainerBuilder : IContainerBuilder
     {
+        private readonly List<ServiceDescriptor> descriptors = new List<ServiceDescriptor>();
+        public IContainer Build()
+        {
+            return new Container(descriptors);
+        }
 
-
+        public void Register(ServiceDescriptor descriptor) {
+            descriptors.Add(descriptor);
+        }
 
 
         //private readonly Dictionary<Type, Type> map = new Dictionary<Type, Type>();

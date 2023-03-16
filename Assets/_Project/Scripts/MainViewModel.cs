@@ -9,10 +9,17 @@ namespace Assets.MainProject.Scripts
     internal class MainViewModel
     {
         private IGovno govno;
+        private int count = 0;
         public MainViewModel(IGovno govno) {
             this.govno = govno;
 
+            
             var str = "ds";
+        }
+
+        public void ff()
+        {
+            count++;
         }
     }
 }

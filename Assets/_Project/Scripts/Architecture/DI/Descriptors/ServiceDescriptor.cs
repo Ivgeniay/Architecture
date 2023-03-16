@@ -7,11 +7,4 @@ namespace Architecture.DI.Descriptors
         public Type ServiceType { get; set; }
         public Lifetime Lifetime { get; set; }
     }
-
-    public enum Lifetime
-    {
-        Transient,
-        Scoped,
-        Singleton
-    }
 }
