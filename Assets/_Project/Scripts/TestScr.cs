@@ -22,8 +22,19 @@ namespace Assets.MainProject.Scripts
             var srt = (MainViewModel)service;
             srt.ff();
             var service2 = scope.Resolve(typeof(MainViewModel));
-            srt = (MainViewModel)service2;
-            srt.ff();
+            var srt2 = (MainViewModel)service2;
+            srt2.ff();
+
+            if (srt == srt2)
+            {
+
+            }
+
+            var scope2 = counainer.CreateScope();
+
+            var service3 = scope2.Resolve(typeof(MainViewModel));
+            var srt3 = (MainViewModel)service3;
+            srt3.ff();
 
             Debug.Log(service);
         }

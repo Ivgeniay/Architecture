@@ -2,7 +2,7 @@
 
 namespace Architecture.DI.Containers
 {
-    internal interface IScope
+    internal interface IScope : IDisposable, IAsyncDisposable
     {
         object Resolve(Type service);
     }

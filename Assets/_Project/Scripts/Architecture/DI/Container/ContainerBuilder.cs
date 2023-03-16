@@ -1,4 +1,5 @@
-﻿using Architecture.DI.Descriptors;
+﻿using Architecture.DI.ActivationBuilds;
+using Architecture.DI.Descriptors;
 using System.Collections.Generic;
 
 namespace Architecture.DI.Containers
@@ -8,7 +9,7 @@ namespace Architecture.DI.Containers
         private readonly List<ServiceDescriptor> descriptors = new List<ServiceDescriptor>();
         public IContainer Build()
         {
-            return new Container(descriptors);
+            return new Container(descriptors, new ReflectionBasedActivationBuild());
         }
 
         public void Register(ServiceDescriptor descriptor) {

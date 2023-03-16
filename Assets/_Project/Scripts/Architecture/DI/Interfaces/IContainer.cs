@@ -1,6 +1,8 @@
-﻿namespace Architecture.DI.Containers
+﻿using System;
+
+namespace Architecture.DI.Containers
 {
-    internal interface IContainer
+    internal interface IContainer : IDisposable, IAsyncDisposable
     {
         IScope CreateScope();
     }
