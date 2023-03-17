@@ -4,7 +4,7 @@ using Architecture.Root.Scenes;
 using System;
 using System.Collections.Generic;
 
-namespace Assets._Project.Scripts.Architecture.Root.Scene
+namespace Assets.MainProject.Scripts.Architecture.Root.Scene
 {
     internal class TestScene : SceneSetting
     {

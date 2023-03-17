@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Assets._Project.Scripts.Utilits.UnityEngineUtils
+namespace Assets.MainProject.Scripts.Utilits.UnityEngineUtils
 {
     internal static class Extensions
     {

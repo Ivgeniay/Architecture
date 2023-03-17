@@ -4,7 +4,7 @@ using Architecture.Root.MainProject;
 using System;
 using System.Collections.Generic;
 
-namespace Assets._Project.Scripts
+namespace Assets.MainProject.Scripts
 {
     internal class Project_set : ProjectSetting
     {
