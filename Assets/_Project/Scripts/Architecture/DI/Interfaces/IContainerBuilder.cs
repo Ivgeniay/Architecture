@@ -1,4 +1,5 @@
 ﻿using Architecture.DI.Descriptors;
+using Architecture.DI.Interfaces;
 
 namespace Architecture.DI.Containers
 {

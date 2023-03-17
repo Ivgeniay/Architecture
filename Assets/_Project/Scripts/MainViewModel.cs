@@ -8,10 +8,10 @@ namespace Assets.MainProject.Scripts
 {
     internal class MainViewModel
     {
-        private IGovno govno;
+        private ITestInterface govno;
         private int count = 0;
-        public MainViewModel(IGovno govno) {
-            this.govno = govno;
+        public MainViewModel(){//ITestInterface govno) {
+            //this.govno = govno;
 
             
             var str = "ds";

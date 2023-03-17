@@ -1,4 +1,5 @@
 ﻿using Architecture.DI;
+using Architecture.DI.ActivationBuilds;
 using Architecture.DI.Containers;
 using Architecture.DI.Containers.Extensions;
 using UnityEngine;
@@ -11,13 +12,13 @@ namespace Assets.MainProject.Scripts
 
         private void Awake()
         {
-            builder = new ContainerBuilder();
+            builder = new ContainerBuilder(new LambdaBasedActivationBuild());
             var counainer = builder
-                .RegistrationSingleton<IGovno, Govno>()
-                .RegistrationSingleton<MainViewModel, MainViewModel>()
+                .RegistrationSingleton<ITestInterface, TestClass>()
+                .RegistrationScoped<MainViewModel, MainViewModel>()
                 .Build();
 
-            var scope = counainer.CreateScope();
+            var scope = counainer.CreateScope(); 
             var service = scope.Resolve(typeof(MainViewModel));
             var srt = (MainViewModel)service;
             srt.ff();
@@ -42,7 +43,7 @@ namespace Assets.MainProject.Scripts
 
         //private void Awake()
         //{
-        //    ioc.Register<IGovno, Govno>();
+        //    ioc.Register<ITestInterface, TestClass>();
         //    ioc.Register<MainViewModel, MainViewModel>();
 
         //    var view = ioc.Resolve<MainViewModel>();

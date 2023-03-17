@@ -2,24 +2,12 @@
 using Architecture.DI.Descriptors;
 using System.Reflection;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using Architecture.DI.Interfaces;
-
 namespace Architecture.DI.ActivationBuilds
 {
-    internal class ReflectionBasedActivationBuild : IActivationBuilder
+    internal class ReflectionBasedActivationBuild : BaseActivationBuilder
     {
-
-        public Func<IScope, object> BuildActivation(ServiceDescriptor descriptor)
+        protected override Func<IScope, object> BuildActivationInternal(TypeBasedServiceDescriptor tb, ConstructorInfo ctor, ParameterInfo[] parameters, ServiceDescriptor descriptor)
         {
-
-            var tb = (TypeBasedServiceDescriptor)descriptor;
-            var ctor = tb.ImplementationType.GetConstructors(BindingFlags.Public | BindingFlags.Instance).Single();
-            var parameters = ctor.GetParameters();
-
-
             return s =>
             {
                 var argsForCtor = new Object[parameters.Length];
@@ -32,6 +20,5 @@ namespace Architecture.DI.ActivationBuilds
                 return ctor.Invoke(argsForCtor);
             };
         }
-
     }
 }

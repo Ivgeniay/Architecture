@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.MainProject.Scripts
 {
-    internal interface IGovno
+    internal interface ITestInterface
     {
     }
 }

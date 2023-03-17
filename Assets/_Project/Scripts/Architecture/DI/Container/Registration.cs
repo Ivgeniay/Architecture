@@ -7,7 +7,7 @@ namespace Architecture.DI.Containers
         //public Container ConfigureServices()
         //{
         //    var builder = new ContainerBuilder();
-        //    builder.Register<IGovno, Govno>();
+        //    builder.Register<ITestInterface, TestClass>();
         //    builder.Register<MainViewModel, MainViewModel>();
         //    return builder.Build();
         //}

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Assets.MainProject.Scripts
 {
-    internal class Govno : IGovno
+    internal class TestClass : ITestInterface
     {
         public string Name;
-        public Govno() {
+        public TestClass() {
             Name = "govno";
         }
     }
