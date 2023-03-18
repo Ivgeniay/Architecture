@@ -4,10 +4,29 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Assets.MainProject.Scripts.Utilits.UnityEngineUtils
-{
-    internal static class Extensions
+namespace Utilits.Extensions
+{ 
+    internal static class UnityEngineExtension
     {
+
+        /// <summary>
+        /// Return true if object is not exist
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static bool NotExist(this UnityEngine.Object target) => 
+            target == null;
+
+        /// <summary>
+        /// Return true if object is exist
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static bool Exist(this UnityEngine.Object target) => 
+            target != null;
+
+
+
         //public static IEnumerable<T> GetFromChilds<T> (this Transform transform, Depth depth = Depth.All)
         //{
         //    depth switch
