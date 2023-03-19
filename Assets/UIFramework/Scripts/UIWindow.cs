@@ -8,6 +8,7 @@ namespace Assets.UIFramework
 {
     public class UIWindow : MonoBehaviour, IBeginDragHandler
     {
+        public bool isUpperPanel = false;
         private string pathInHierarchy;
         private UIMediator uIMediator; 
 

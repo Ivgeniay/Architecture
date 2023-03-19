@@ -24,8 +24,10 @@ namespace UIFramework
             {
                 x.SetMediator(this);
                 windows.Add(x.GetPath(), x);
-                
-                var upperPanel = Instantiate(upperPanels, x.transform);
+                x.With(
+                    el => Instantiate(upperPanels, x.transform),
+                    @if: el => el.isUpperPanel
+                    );
             });
 
             if (windows.Count > 0)

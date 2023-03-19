@@ -32,6 +32,10 @@ namespace UIFramework
 
         }
 
+        public void Cross() {
+            parentPanel.gameObject.SetActive(false);
+        }
+
     }
 }
 
