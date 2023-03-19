@@ -1,6 +1,9 @@
-﻿namespace Utilits.Extensions
+﻿using System.Collections;
+using UnityEngine;
+
+namespace Utilits.Extensions
 { 
-    internal static class UnityEngineExtension
+    public static class UnityEngineExtension
     {
 
         /// <summary>
@@ -8,7 +11,7 @@
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static bool NotExist(this UnityEngine.Object target) => 
+        public static bool IsNotExist(this UnityEngine.Object target) => 
             target == null;
 
         /// <summary>
@@ -16,9 +19,8 @@
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static bool Exist(this UnityEngine.Object target) => 
+        public static bool IsExist(this UnityEngine.Object target) => 
             target != null;
-
 
 
         //public static IEnumerable<T> GetFromChilds<T> (this Transform transform, Depth depth = Depth.All)

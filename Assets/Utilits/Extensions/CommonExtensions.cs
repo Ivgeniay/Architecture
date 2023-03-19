@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Linq;
+using System.Text;
 
 namespace Utilits.Extensions
 {
-    internal static class CommonExtensions
+    public static class CommonExtensions
     {
         /// <summary>
         /// Return true if object is not exist
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static bool NotExist(this System.Object target) =>
+        public static bool IsNotExist(this System.Object target) =>
             target == null;
 
         /// <summary>
@@ -17,17 +19,39 @@ namespace Utilits.Extensions
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        public static bool Exist(this System.Object target) =>
+        public static bool IsExist(this System.Object target) =>
             target != null;
 
 
-        public static string FirstCharToUpper(this String input)
-        {
+        //string
+        public static string FirstCharToUpper(this String input) {
             if (string.IsNullOrEmpty(input))
                 throw new ArgumentNullException(nameof(input));
 
             return input[0].ToString().ToUpper() + input.Substring(1);
         }
+
+        public static string ReversePath(this String input) {
+
+            if (string.IsNullOrEmpty(input))
+                throw new ArgumentException(nameof(input));
+
+            if (!input.Contains("/"))
+                return input;
+
+            StringBuilder result = new StringBuilder();
+            var arr = input.Split("/");
+            
+            for(int i = arr.Length - 1; i >= 0; i--)
+            {
+                result.Append(arr[i]);
+                if (i != 0) result.Append("/");
+
+            }
+
+            return result.ToString();
+        }
+
 
 
 
