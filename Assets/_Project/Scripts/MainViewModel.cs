@@ -22,7 +22,7 @@ namespace Assets.MainProject.Scripts
 
         private void Update()
         {
-            Debug.Log("isCan: " + isCan);
+            //Debug.Log("isCan: " + isCan);
         }
         //public MainViewModel(){
         //    var str = "ds";

@@ -22,7 +22,7 @@ namespace Scripts.Sample.Scripts
 
         private void Update()
         {
-            if (Game.Instance.isLoaded) 
+            if (Engine.Instance.isLoaded) 
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow)) {
                     SceneManager.LoadScene(testSceneName);

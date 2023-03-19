@@ -13,7 +13,7 @@ internal class PlayerController : Controller
 
     public override IEnumerator OnAwakeRoutine()
     {
-        playerRepository = Game.Instance.GetRepository<PlayerRepository>();
+        playerRepository = Engine.Instance.GetRepository<PlayerRepository>();
         yield return null;
     }
 

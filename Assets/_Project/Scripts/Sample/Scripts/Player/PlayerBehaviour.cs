@@ -8,12 +8,12 @@ internal class PlayerBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        Game.Instance.OnSceneStartEvent += OnSceneStart;
+        Engine.Instance.OnSceneStartEvent += OnSceneStart;
     }
 
     private void OnSceneStart()
     {
-        playerController = Game.Instance.GetController<PlayerController>();
+        playerController = Engine.Instance.GetController<PlayerController>();
     }
 
     private void Start()
