@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Utilits.Extensions
@@ -26,7 +26,6 @@ namespace Utilits.Extensions
             target != null;
 
 
-
         //public static IEnumerable<T> GetFromChilds<T> (this Transform transform, Depth depth = Depth.All)
         //{
         //    depth switch
@@ -48,7 +47,7 @@ namespace Utilits.Extensions
 
         //    return null;
         //}
-        
+
     }
 
     public enum Depth

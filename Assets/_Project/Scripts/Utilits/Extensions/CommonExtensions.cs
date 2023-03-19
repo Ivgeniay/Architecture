@@ -34,5 +34,33 @@ namespace Utilits.Extensions
         }
 
 
+
+
+        public static T With<T>(this T self, Action<T> @do)
+        {
+            @do.Invoke(self);
+            return self;
+        }
+
+        public static T With<T>(this T self, Action<T> apply, Func<bool> @if)
+        {
+            if (@if())
+                apply.Invoke(self);
+            return self;
+        }
+
+        public static T With<T>(this T self, Action<T> apply, Func<T, bool> @if)
+        {
+            if (@if(self))
+                apply.Invoke(self);
+            return self;
+        }
+
+        public static T With<T>(this T self, Action<T> apply, bool @if)
+        {
+            if (@if)
+                apply.Invoke(self);
+            return self;
+        }
     }
 }
