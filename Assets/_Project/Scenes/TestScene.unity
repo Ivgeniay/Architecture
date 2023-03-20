@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2497cc3e46e2b149a3f0670b5b6fffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUpperPanel: 0
+  isUpperPanel: 1
 --- !u!1 &1243902960
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2497cc3e46e2b149a3f0670b5b6fffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isUpperPanel: 0
+  isUpperPanel: 1
 --- !u!114 &1243902963
 MonoBehaviour:
   m_ObjectHideFlags: 0

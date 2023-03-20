@@ -1,15 +1,13 @@
-using Assets.UIFramework;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Utilits.Extensions;
-using static Codice.Client.Common.DiffMergeToolConfig;
 
 namespace UIFramework
 {
     public class UIMediator : MonoBehaviour
     {
-        public List<UIWindow> panels;
+        public List<UIWindow> windowList;
 
         [SerializeField] private UIInterface uiInterface;
         [SerializeField] private UIUpperPanel upperPanels;
@@ -18,9 +16,9 @@ namespace UIFramework
 
         private void Awake()
         {
-            panels = uiInterface.GetComponentsInChildren<UIWindow>(true).ToList();
+            windowList = uiInterface.GetComponentsInChildren<UIWindow>(true).ToList();
 
-            panels.ForEach(x =>
+            windowList.ForEach(x =>
             {
                 x.SetMediator(this);
                 windows.Add(x.GetPath(), x);

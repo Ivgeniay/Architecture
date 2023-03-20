@@ -1,10 +1,8 @@
-﻿using System;
-using UIFramework;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using Utilits.Extensions;
 
-namespace Assets.UIFramework
+namespace UIFramework
 {
     public class UIWindow : MonoBehaviour, IBeginDragHandler
     {
