@@ -1,4 +1,4 @@
-﻿namespace Utilits.Timers
+﻿namespace Utilits.TimeWork.Timers
 {
     public enum TimerType
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Architecture.Pools.ObjectsPool
+namespace Utilits.Pools.ObjectsPool
 {
     public class ObjectPool<T> : IEnumerator<T>, IEnumerable<T>
     {

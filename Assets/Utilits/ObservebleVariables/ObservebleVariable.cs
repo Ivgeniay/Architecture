@@ -2,7 +2,7 @@
 
 namespace Utilits.ObservebleVariables
 {
-    internal class ObservebleVariable<T>
+    public class ObservebleVariable<T>
     {
         public Action<T> OnValueChangedEvent;
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Utilits.Timers
+namespace Utilits.TimeWork.Timers
 {
     public class Timer 
     {

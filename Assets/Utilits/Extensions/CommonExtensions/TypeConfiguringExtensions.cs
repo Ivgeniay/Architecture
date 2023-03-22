@@ -4,7 +4,6 @@ namespace Utilits.Extensions
 {
     public static class TypeConfiguringExtensions
     {
-
         public static T With<T>(this T self, Action<T> @do)
         {
             @do.Invoke(self);
