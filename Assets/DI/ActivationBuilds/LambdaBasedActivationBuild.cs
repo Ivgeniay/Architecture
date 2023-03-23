@@ -7,7 +7,7 @@ using System;
 
 namespace DI.ActivationBuilds
 {
-    public class LambdaBasedActivationBuild : BaseActivationBuilder
+    internal class LambdaBasedActivationBuild : BaseActivationBuilder
     {
         private static readonly MethodInfo ResolveMethod = typeof(IScope).GetMethod("Resolve");
         protected override Func<IScope, object> BuildActivationInternal(TypeBasedServiceDescriptor tb, ConstructorInfo ctor, ParameterInfo[] parameters, ServiceDescriptor descriptor)

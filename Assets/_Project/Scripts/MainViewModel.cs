@@ -17,7 +17,7 @@ namespace Assets.MainProject.Scripts
         private void Update() {
         }
 
-        TestClass testClass;
+        [SerializeField] TestClass testClass;
         private void Construct(TestClass testClass)
         {
             this.testClass = testClass;

@@ -4,6 +4,6 @@ namespace DI.Containers
 {
     public interface IContainer : IDisposable, IAsyncDisposable
     {
-        IScope CreateScope();
+        public IScope CreateScope();
     }
 }

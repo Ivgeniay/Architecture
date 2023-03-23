@@ -56,7 +56,7 @@ namespace DI.Containers.Extensions
         public static IContainerBuilder RegistrationScoped<TService>(this IContainerBuilder builder, Func<IScope, object> factory)
             => builder.RegisterFactory(typeof(TService), factory, Lifetime.Scoped);
 
-        public static IContainerBuilder RegisterSingleton<TService>(this IContainerBuilder builder, object instance)
+        public static IContainerBuilder RegistrationSingletonFromInstance<TService>(this IContainerBuilder builder, object instance)
             => builder.RegisterInstance(typeof(TService), instance);
     }
 }

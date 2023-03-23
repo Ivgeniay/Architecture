@@ -1,6 +1,5 @@
 ﻿using DI.ActivationBuilds;
 using DI.Containers;
-using DI.Containers.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,38 +9,41 @@ using UnityEngine;
 namespace DI.MonoDI
 {
     public class MonoDI : MonoBehaviour {
+
         private IScope scope;
         private static MonoDI instance;
-        public static MonoDI Instance { get 
-            {
-                if (instance == null)
-                {
-                    var go = new GameObject("[CONTAINER]");
-                    instance = go.AddComponent<MonoDI>();
-                    DontDestroyOnLoad(go);
+        public static MonoDI Instance { get  {
+                if (instance == null) {
+                    instance = FindObjectOfType<MonoDI>();
+                    if (instance is null) {
+                        var go = new GameObject("[CONTAINER]");
+                        instance = go.AddComponent<MonoDI>();
+                        DontDestroyOnLoad(go);
+                    }
                 }
                 return instance;
             }
         }
+        private bool isStarted;
+
 
         private IScope ContainerBuild() {
-            return  new ContainerBuilder(new LambdaBasedActivationBuild())
+            var builder = new ContainerBuilder(new LambdaBasedActivationBuild());
 
-                .RegistrationSingleton<TestClass, TestClass>()
+            var binders = FindObjectsOfType<Binder>().ToList();
+            binders.ForEach(el =>
+            {
+                el.BindContainer(builder);
+            });
 
-                .Build()
-                .CreateScope();
+            return builder
+                    .Build()
+                    .CreateScope();
         }
 
 
         private void Awake() {
-            scope = ContainerBuild();
-
-            var monos = FindObjectsOfType<MonoBehaviour>().ToList();
-            foreach (var el in monos) {
-                InvokeConstructor(el);
-            }
-
+            StartContainer();
         }
 
 
@@ -49,23 +51,30 @@ namespace DI.MonoDI
              gameObject.GetComponents<MonoBehaviour>();
         
         private void InvokeConstructor(MonoBehaviour el) {
-                var ctor = el.GetType().GetMethod("Construct", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-                if (ctor is not null) {
-                    var @params = ctor.GetParameters();
-                    var listScopeParam = new List<object>();
+            var ctor = el.GetType().GetMethod("Construct", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
+            if (ctor is not null) {
+                var @params = ctor.GetParameters();
+                var listScopeParam = new List<object>();
 
-                    foreach (var param in @params) {
-                        var type = param.ParameterType;
-                        var resolve = scope.Resolve(type);
-                        listScopeParam.Add(resolve);
-                    }
-                    ctor.Invoke(el, listScopeParam.ToArray());
+                foreach (var param in @params) {
+                    var type = param.ParameterType;
+                    var resolve = scope.Resolve(type);
+                    listScopeParam.Add(resolve);
                 }
+                ctor.Invoke(el, listScopeParam.ToArray());
+            }
         }
 
-        //public void StartContainer()
-        //{
-        //    Debug.Log("StartContainer from mdi");
-        //}
+        public void StartContainer() {
+            if (isStarted) return;
+
+            scope = ContainerBuild();
+            var monos = FindObjectsOfType<MonoBehaviour>().ToList();
+
+            foreach (var el in monos)            
+                InvokeConstructor(el);
+            
+            isStarted = true;
+        }
     }
 }

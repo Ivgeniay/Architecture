@@ -1,6 +1,6 @@
 ﻿namespace DI.Descriptors
 {
-    public enum Lifetime
+    internal enum Lifetime
     {
         Transient,
         Scoped,

@@ -1,12 +1,10 @@
-﻿using DI.ActivationBuilds;
-using DI.Descriptors;
+﻿using DI.Descriptors;
 using DI.Interfaces;
 using System.Collections.Generic;
-using static UnityEditor.ObjectChangeEventStream;
 
 namespace DI.Containers
 {
-    public class ContainerBuilder : IContainerBuilder
+    internal class ContainerBuilder : IContainerBuilder
     {
         private IActivationBuilder builder;
         private readonly List<ServiceDescriptor> descriptors = new List<ServiceDescriptor>();

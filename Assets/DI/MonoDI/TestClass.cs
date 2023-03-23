@@ -1,11 +1,14 @@
-﻿namespace DI.MonoDI
+﻿using System;
+using UnityEngine;
+
+namespace DI.MonoDI
 {
-    public class TestClass
+    public class TestClass : MonoBehaviour
     {
-        public int tt = 0;
+        public Guid tt = new Guid();
 
         public TestClass() {
-            tt += 1;
+            tt = Guid.NewGuid();
         }
 
     }
