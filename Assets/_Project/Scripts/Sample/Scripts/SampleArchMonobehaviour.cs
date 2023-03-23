@@ -1,4 +1,6 @@
 ﻿using Architecture.Root.ArchBehaviour;
+using Assets.MainProject.Scripts;
+using DI.MonoDI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,6 +10,7 @@ namespace Scripts.Sample.Scripts
     {
         [SerializeField] private string loadSceneName;
         [SerializeField] private string testSceneName;
+        [SerializeField] private MainViewModel mainViewModel;
 
         protected override void OnResourceEvent(OnResourceEventArgs onResourceEventArgs)
         {
@@ -29,7 +32,10 @@ namespace Scripts.Sample.Scripts
                 }                
                 if (Input.GetKeyDown(KeyCode.LeftArrow)){
                     SceneManager.LoadScene(loadSceneName);
-                    
+                }
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    MonoDI.Instance.Instantiate(mainViewModel);
                 }
             }
         }

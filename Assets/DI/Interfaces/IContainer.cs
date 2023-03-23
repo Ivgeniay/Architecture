@@ -2,7 +2,7 @@
 
 namespace DI.Containers
 {
-    internal interface IContainer : IDisposable, IAsyncDisposable
+    public interface IContainer : IDisposable, IAsyncDisposable
     {
         IScope CreateScope();
     }

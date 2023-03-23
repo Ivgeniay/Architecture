@@ -4,7 +4,7 @@ using System;
 
 namespace DI.Containers.Extensions
 {
-    internal static class ContainerBuilderExtensions
+    public static class ContainerBuilderExtensions
     {
         private static IContainerBuilder RegisterType(
             this IContainerBuilder builder, 

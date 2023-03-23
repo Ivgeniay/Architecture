@@ -14,12 +14,10 @@ namespace UIFramework
 
         private Dictionary<string, UIWindow> windows = new Dictionary<string, UIWindow>();
 
-        private void Awake()
-        {
+        private void Awake() {
             windowList = uiInterface.GetComponentsInChildren<UIWindow>(true).ToList();
 
-            windowList.ForEach(x =>
-            {
+            windowList.ForEach(x => {
                 x.SetMediator(this);
                 windows.Add(x.GetPath(), x);
                 x.With(
@@ -27,14 +25,6 @@ namespace UIFramework
                     @if: el => el.isUpperPanel
                     );
             });
-
-            if (windows.Count > 0)
-            {
-                foreach (var el in windows)
-                {
-                    Debug.Log(el.Key);
-                }
-            }
         }
     }
 

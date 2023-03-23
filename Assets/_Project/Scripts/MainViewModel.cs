@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DI.MonoDI;
 using UnityEngine;
 
 namespace Assets.MainProject.Scripts
@@ -15,21 +11,20 @@ namespace Assets.MainProject.Scripts
         private ITestInterface govno;
         private int count = 0;
 
-        private void Awake()
-        {
-            
+        private void Awake() {
         }
 
-        private void Update()
-        {
-            //Debug.Log("isCan: " + isCan);
+        private void Update() {
         }
-        //public MainViewModel(){
-        //    var str = "ds";
-        //}
 
-        public void ff()
+        TestClass testClass;
+        private void Construct(TestClass testClass)
         {
+            this.testClass = testClass;
+            Debug.Log("From construct!");
+        }
+
+        public void ff() {
             count++;
         }
     }

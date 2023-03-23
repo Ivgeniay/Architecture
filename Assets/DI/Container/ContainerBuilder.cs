@@ -6,7 +6,7 @@ using static UnityEditor.ObjectChangeEventStream;
 
 namespace DI.Containers
 {
-    internal class ContainerBuilder : IContainerBuilder
+    public class ContainerBuilder : IContainerBuilder
     {
         private IActivationBuilder builder;
         private readonly List<ServiceDescriptor> descriptors = new List<ServiceDescriptor>();

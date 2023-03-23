@@ -36,20 +36,20 @@ namespace Utilits.TimeWork.Stopwatchs
 
         private void Update()
         {
-            if (stopwatchList.Count > 0)
-            {
-                stopwatchList.ForEach(el => {
-                    if (el is null) return;
-                    el.Tick(Time.deltaTime);
-                });
+            if (stopwatchList.Count == 0) return;
+            
+            stopwatchList.ForEach(el => {
+                if (el is null) return;
+                el.Tick(Time.deltaTime);
+            });
 
-                if (removeList.Count > 0) {
-                    removeList.ForEach(el => {
-                        stopwatchList.Remove(el);
-                    });
-                    removeList.Clear();
-                }
+            if (removeList.Count > 0) {
+                removeList.ForEach(el => {
+                    stopwatchList.Remove(el);
+                });
+                removeList.Clear();
             }
+            
 
         }
     }

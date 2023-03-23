@@ -2,7 +2,7 @@
 
 namespace DI.Descriptors
 {
-    internal class TypeBasedServiceDescriptor : ServiceDescriptor
+    public class TypeBasedServiceDescriptor : ServiceDescriptor
     {
         public Type ImplementationType { get; set; }
     }

@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace DI.ActivationBuilds
 {
-    internal abstract class BaseActivationBuilder : IActivationBuilder
+    public abstract class BaseActivationBuilder : IActivationBuilder
     {
         public Func<IScope, object> BuildActivation(ServiceDescriptor descriptor)
         {
