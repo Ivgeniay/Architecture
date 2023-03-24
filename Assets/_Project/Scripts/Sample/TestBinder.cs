@@ -11,7 +11,7 @@ namespace Assets._Project.Scripts.Sample
         protected override IContainerBuilder BindContainer(IContainerBuilder builder)
         {
             builder.RegistrationSingletonFromInstance<TestClass>(testClass);
-            return base.BindContainer(builder);
+            return builder;
         }
     }
 }
