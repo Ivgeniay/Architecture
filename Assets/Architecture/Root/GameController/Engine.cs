@@ -145,16 +145,6 @@ public class Engine : MonoBehaviour
         //    OnSceneStartHandler();
         //}
     }
-    private void UnsubscribeScene()
-    {
-        sceneController.OnControllerEvent -= OnControllerEventHandler;
-        sceneController.OnRepositoryEvent -= OnRepositoryEventHandler;
-    }
-    private void UnsubscribeProject()
-    {
-        ProjectController.OnControllerEvent -= OnControllerEventHandler;
-        ProjectController.OnRepositoryEvent -= OnRepositoryEventHandler;
-    }
 
 
     void Update()
@@ -164,12 +154,6 @@ public class Engine : MonoBehaviour
             ProjectController.Frame();
             sceneController.Frame();
         }
-
-        //if (Input.GetKeyDown(KeyCode.RightArrow)) SceneManager.LoadScene("MainMenu");
-        //if (Input.GetKeyDown(KeyCode.LeftArrow)) SceneManager.LoadScene("LoadScene");
-        //if (Input.GetKeyDown(KeyCode.Space)) GetController<TwitchFacadeController>().Connect();
-        //if (Input.GetKeyDown(KeyCode.A)) GetController<TwitchFacadeController>().SendChatMessage("Hello");
-        //if (Input.GetKeyDown(KeyCode.D)) GetController<TwitchFacadeController>().GetChatters().data.ForEach(el => Debug.Log($"{el.user_id}: {el.user_name} "));
     }
 
     public T GetRepository<T>() where T : Repository
@@ -200,15 +184,30 @@ public class Engine : MonoBehaviour
         return controller;
     }
 
-    public IEnumerator SceneUnload()
-    {
+    public void NextScene(string sceneName) =>    
+        StartCoroutine(NextSceneRoutine(sceneName));
+    private IEnumerator SceneUnloadRoutine() {
         OnSceneUnloadHandler();
         yield return sceneController.ExitCurrentScene();
+    }
+    private IEnumerator NextSceneRoutine(string sceneName) {
+        yield return SceneUnloadRoutine();
+        SceneManager.LoadScene(sceneName);
     }
 
     private void OnApplicationQuit()
     {
         ProjectController.ExitProgramm();
+    }
+
+
+    private void UnsubscribeScene() {
+        sceneController.OnControllerEvent -= OnControllerEventHandler;
+        sceneController.OnRepositoryEvent -= OnRepositoryEventHandler;
+    }
+    private void UnsubscribeProject() {
+        ProjectController.OnControllerEvent -= OnControllerEventHandler;
+        ProjectController.OnRepositoryEvent -= OnRepositoryEventHandler;
     }
 
     private void OnRepositoryEventHandler(object arg1, LoadingEventType arg2) => OnRepositoryEvent?.Invoke(arg1, arg2);

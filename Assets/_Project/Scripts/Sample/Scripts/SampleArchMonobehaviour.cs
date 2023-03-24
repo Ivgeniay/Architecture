@@ -2,7 +2,6 @@
 using Assets.MainProject.Scripts;
 using DI.MonoDI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Scripts.Sample.Scripts
 {
@@ -14,12 +13,17 @@ namespace Scripts.Sample.Scripts
 
         protected override void OnResourceEvent(OnResourceEventArgs onResourceEventArgs)
         {
-            //Debug.Log(onResourceEventArgs.Resource.ToString() + onResourceEventArgs.LoadingType);
+            Debug.Log(onResourceEventArgs.Resource.ToString() + onResourceEventArgs.LoadingType);
         }
 
         protected override void OnSceneStart()
         {
 
+        }
+        protected override void OnProjectAwake()
+        {
+            var tt = Engine.Instance.GetController<GameController>();
+            Debug.Log(tt);
         }
 
 
@@ -28,10 +32,10 @@ namespace Scripts.Sample.Scripts
             if (Engine.Instance.isLoaded) 
             {
                 if (Input.GetKeyDown(KeyCode.RightArrow)) {
-                    SceneManager.LoadScene(testSceneName);
+                    Engine.Instance.NextScene(loadSceneName);
                 }                
                 if (Input.GetKeyDown(KeyCode.LeftArrow)){
-                    SceneManager.LoadScene(loadSceneName);
+                    Engine.Instance.NextScene(testSceneName);
                 }
                 if (Input.GetKeyDown(KeyCode.F))
                 {
@@ -39,5 +43,6 @@ namespace Scripts.Sample.Scripts
                 }
             }
         }
+
     }
 }

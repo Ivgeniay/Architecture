@@ -23,14 +23,15 @@ namespace Architecture.Root.Scenes
             controllersPool = new ControllersPool(Setting);
             repositoriesPool = new RepositoriesPool(Setting);
 
-            controllersPool.OnControllerEvent += OnControllerEventHandler;
-            repositoriesPool.OnRepositoryEvent += OnRepositoryEventHandler;
         }
 
         public override IEnumerator InitializeRoutine() { yield return Initialize(); }
 
         protected override IEnumerator Initialize()
         {
+            controllersPool.OnControllerEvent += OnControllerEventHandler;
+            repositoriesPool.OnRepositoryEvent += OnRepositoryEventHandler;
+
             yield return null;
 
             repositoriesPool.CreateRepositories();

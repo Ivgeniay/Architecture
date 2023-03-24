@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Architecture.Root.ArchBehaviour;
+using UnityEngine;
 
 namespace Assets.MainProject.Scripts
 {
@@ -6,10 +7,9 @@ namespace Assets.MainProject.Scripts
     {
         private void Awake()
         {
-            var tt = Engine.Instance.GetController<GameController>();
-            Debug.Log(tt);
         }
 
+        
     }
 }
 
