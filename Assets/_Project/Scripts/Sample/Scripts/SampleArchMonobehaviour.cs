@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 namespace Scripts.Sample.Scripts
 {
-    internal class SampleArchMonobehaviour : MonoArchBehaviour
+    internal class SampleArchMonobehaviour : EventMonoBehaviour
     {
         [SerializeField] private string loadSceneName;
         [SerializeField] private string testSceneName;

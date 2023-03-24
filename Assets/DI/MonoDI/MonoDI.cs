@@ -1,5 +1,6 @@
 ﻿using DI.ActivationBuilds;
 using DI.Containers;
+using DI.Containers.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,11 @@ namespace DI.MonoDI
         }
         private bool isStarted;
 
+        private IContainerBuilder DependenciesRegister(IContainerBuilder builder)
+        {
+            return builder;
+        }
+
 
         private IScope ContainerBuild() {
             var builder = new ContainerBuilder(new LambdaBasedActivationBuild());
@@ -36,6 +42,7 @@ namespace DI.MonoDI
             {
                 el.Bind(builder);
             });
+            DependenciesRegister(builder);
 
             return builder
                     .Build()

@@ -2,7 +2,7 @@
 
 namespace Architecture.Root.ArchBehaviour
 {
-    public abstract class MonoArchBehaviour : MonoBehaviour
+    public abstract class EventMonoBehaviour : MonoBehaviour
     {
         private void OnEnable() =>
             Subscribe();
