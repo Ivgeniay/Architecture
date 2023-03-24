@@ -85,11 +85,23 @@ Frame - аналог Update в Monobehaviour.
 Репозиторий имеет тот же принцип, что и контроллер, за одним исплючением - абстрактный метод SaveRoutine(); Подразумевается, что репозитории необходимо сохранять используя этот метод. Он не включается в пайплайн настройки и создания репозитория.
 
 Если вам необходим класс который зависим непосредственно от архитектуры и должен начать совершать действия только после тогда как произойдет действие связанное с событиями Controller интерфейса или Repository интерфейса, можно унаследовать ваш класс от EventMonoBehaviour вместо MonoBehaviour. Этот класс содержит список необходимых виртуальных методов, которые вызываются при срабатывании всех возможных событии создания, инициализации и старта контроллеров и репозиториев.
+Поскольку класс реализует внутрение функции Unity SendMessage,
+```
+ SendMessageUpwards("OnSceneStart", null, SendMessageOptions.DontRequireReceiver);
+```
+ то такой класс достаточно реализовать в одном экземпляре на объекте. Он будет вызывать методы со схожей сигнатурой и на других классах этого объекта независимо от того унаследованы они от EventMonoBehaviour или нет. С этим нужно быть осторожным.
 
 ---
 ## DI
 
 Кастомный Di контейнер.
+
+ LifeTime:
+
+* Singleton - объект живущий на протяжении всей работы программы.
+* Scoped - объект существующий пока существует сцена. При смене сцены объект будет создаваться новый.
+* Transient - при каждом запросе создается новый экземпляр.
+
 
 Для регистрации не MonoBehaviour зависимостей необходимо в классе MonoDI зарегистрировать ваш класс внутри метода  
 
@@ -126,6 +138,36 @@ private void Construct(TestClass testClass)
     Debug.Log("From construct!");
 }
 ```
+
+DI для регистрации зависимости поддерживает:
+
+ * регистрацию маппинга объектов. Объект может маппиться сам на себя, или на абстракцию, от которой унаследован в виде передачи типов через Generic параметры
+```
+builder
+        .RegistrationSingleton<CustomClass, CustomClass>()
+        .RegistrationSingleton<ICustomService, CustomService>()
+```
+ * регистрацию через передачу параметров в метод
+```
+builder
+        .RegistrationSingleton(typeof(CustomClass), typeof(CustomClass))
+        .RegistrationSingleton(typeof(ICustomService), typeof(CustomService))
+```
+ * регистрацию instance используя делегат
+ ```
+ builder
+        .RegistrationSingleton<TestClass>(e =>
+        {
+            var testClass = new TestClass(Name: "Pedro", Age: 23);
+            return testClass;
+        });
+ ```
+ * регистрацию instance используя уже существующий instance
+ ```
+ builder
+        .RegistrationSingletonFromInstance<TestClass>(instance)
+ ```
+
 
 ---
 
