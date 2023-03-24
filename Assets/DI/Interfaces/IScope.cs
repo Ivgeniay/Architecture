@@ -4,6 +4,6 @@ namespace DI.Containers
 {
     public interface IScope : IDisposable, IAsyncDisposable
     {
-        public object Resolve(Type service);
+        public object Resolve(Type service, int id = 0);
     }
 }

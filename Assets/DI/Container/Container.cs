@@ -50,7 +50,7 @@ namespace DI.Containers
         {
             return builActivators.GetOrAdd(service, BuildActivation)(scope);
         }
-        private ServiceDescriptor FindDescriptor(Type service)
+        private ServiceDescriptor FindDescriptor(Type service, int id = 0)
         {
             descriptors.TryGetValue(service, out var descriptor);
             return descriptor;
@@ -71,9 +71,9 @@ namespace DI.Containers
                 this.container = container;
             }
 
-            public object Resolve(Type service)
+            public object Resolve(Type service, int id = 0)
             {
-                var descriptor = container.FindDescriptor(service);
+                var descriptor = container.FindDescriptor(service, id);
                 if (descriptor.Lifetime == Lifetime.Transient)
                     return CreateInstanceInternal(service);
 
@@ -85,8 +85,7 @@ namespace DI.Containers
                 }
             }
 
-            private object CreateInstanceInternal(Type service)
-            {
+            private object CreateInstanceInternal(Type service) {
                 var result = container.CreateInstance(service, this);
                 if (result is IDisposable || result is IAsyncDisposable)
                     disposables.Push(result);

@@ -6,7 +6,8 @@ namespace DI.Descriptors
     {
         public object Instance { get; set; }
 
-        public InstanceBasedServiceDescriptor(Type serviceType, object instance) {
+        public InstanceBasedServiceDescriptor(Type serviceType, object instance, int _id = 0) {
+            id = _id;
             Lifetime = Lifetime.Singleton;
             ServiceType = serviceType;
             Instance = instance;

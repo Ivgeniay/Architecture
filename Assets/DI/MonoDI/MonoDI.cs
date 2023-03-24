@@ -1,5 +1,6 @@
 ﻿using DI.ActivationBuilds;
 using DI.Containers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace DI.MonoDI
             var binders = FindObjectsOfType<Binder>().ToList();
             binders.ForEach(el =>
             {
-                el.BindContainer(builder);
+                el.Bind(builder);
             });
 
             return builder
@@ -63,6 +64,16 @@ namespace DI.MonoDI
                 }
                 ctor.Invoke(el, listScopeParam.ToArray());
             }
+        }
+
+        public T GetResolve<T>()
+        {
+            var type = typeof(T);
+            return (T)scope.Resolve(type);
+        }
+        public void Register()
+        {
+
         }
 
         public void StartContainer() {

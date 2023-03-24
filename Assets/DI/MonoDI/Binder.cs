@@ -5,7 +5,11 @@ namespace DI.MonoDI
 {
     public abstract class Binder : MonoBehaviour
     {
-        public virtual IContainerBuilder BindContainer(IContainerBuilder builder) {
+        public IContainerBuilder Bind(IContainerBuilder builder) {
+            return BindContainer(builder);
+        }
+
+        protected virtual IContainerBuilder BindContainer(IContainerBuilder builder) {
             return builder;
         }
     }
