@@ -8,7 +8,6 @@ namespace Assets.MainProject.Scripts
         public bool isEnable = true;
         public bool isCan = false;
 
-        private ITestInterface govno;
         private int count = 0;
 
         private void Awake() {

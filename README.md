@@ -112,6 +112,7 @@ private IContainerBuilder DependenciesRegister(IContainerBuilder builder)
     return builder;
 }
 ```
+Однако, учитывая то что код с DI находтся в отдельной сберке, то класс MonoDI не будет иметь доступ к вашим классом основной сборки. Поэтому лучше использовать следующий метод определенный для Mono -классов:
 
 Для регистрации Mono экземпляров необходимо создать класс наследующий класс Binder:
 
@@ -127,6 +128,10 @@ private IContainerBuilder DependenciesRegister(IContainerBuilder builder)
     }
 ```
 и реализовать его на сцене с прокидыванием ссылки на экземпляр или префаб.
+(Так же можно прокидывать зависимости и не Mono классов используя ранее указанный синтаксис)
+```
+    builder.RegistrationSingleton<CustomClass, CustomClass>();
+```
 
 Для внедрения ваших зависимостей в MonoBehaviour классы необходимо реализовать метод публичный, приватный или статический метод Construct
 
