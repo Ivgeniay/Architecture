@@ -17,6 +17,9 @@ namespace Utilits.Pools.ObjectsPool
                 var go = new GameObject($"PoolOf:{instance}");
                 this.container = go.transform;
             }
+            else 
+                this.container = container;
+            
             this.isAutoExpandable = isAutoExpandable;
 
             pool = CreatePool(count, this.container);
